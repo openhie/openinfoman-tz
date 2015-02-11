@@ -82,17 +82,6 @@ let $csd_orgs :=
 	 <csd:codedType code="{$level}" codingScheme="{$oid}"/>
 	 <csd:primaryName>{$name/text()}</csd:primaryName>
 	 {$parent}
-	 {
-	   if ( not(functx:all-whitespace($village)) )
-	     then  
-	       (
-		 concat('Want parent ward ' , $ward)
-		 , 
-		 $csv[./Ward = $ward ] (:and functx:all-whitespace(./VillMtaa)]:)
-		 )
-	     else ()
-	 }
-
        </csd:organization>
      else ($record)  (:no name or id or type :)
 

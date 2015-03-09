@@ -102,7 +102,7 @@
                 "uuid": "eb6b13ab-6a2b-4e17-aa72-37828738ee53"
               }
             ], 
-            "webhook": "http://CSD:manage@liberia-staging.mhero.org:5001/CSD/csr/dhis_training_liberia_uuid/careServicesRequest/urn:openhie.org:openinfoman-rapidpro:select_facility/adapter/rapidpro/WebHook?orgid==contact.facility_select_orgid&input==step.value", 
+            "webhook": "http://142.222.45.58:5001/CSD/csr/dhis2_tz_test/careServicesRequest/urn:openhie.org:openinfoman-rapidpro:select_village/adapter/rapidpro/WebHook?orgid==contact.facility_select_orgid&input==step.value", 
             "label": "facilityname", 
             "operand": "@extra.facilityname", 
             "finished_key": null, 

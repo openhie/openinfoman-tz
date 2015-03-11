@@ -9,7 +9,7 @@ Homepage: https://github.com/openhie/openinfoman-tz
 
 Package: openinfoman-tz
 Architecture: all
-Depends: openinfoman (>= 1.0.11)
+Depends: openinfoman (>= 1.0.11), openinfoman-rapidpro
 Recommends: 
 Description: OpenInfoMan Tanzania Library
  Library of stored functions for OpenInfoMan specific to Tanzania

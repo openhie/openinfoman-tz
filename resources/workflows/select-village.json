@@ -1,0 +1,124 @@
+{
+  "version": 4, 
+  "flows": [
+    {
+      "definition": {
+        "base_language": "eng", 
+        "action_sets": [
+          {
+            "y": 158, 
+            "x": 670, 
+            "destination": "fe4f89bb-e32a-4715-872a-d318e00c11b3", 
+            "uuid": "d8371909-1aa3-48db-afa8-c6b14319fc39", 
+            "actions": [
+              {
+                "field": "facility_select_orgid", 
+                "type": "save", 
+                "value": "@extra.orgid", 
+                "label": "Facility Select OrgID"
+              }, 
+              {
+                "msg": {
+                  "eng": "Please choose from the following: @extra.menutext"
+                }, 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 816, 
+            "x": 587, 
+            "destination": null, 
+            "uuid": "a7df4d9f-7731-4ba7-bf7f-a41a37be189c", 
+            "actions": [
+              {
+                "msg": {
+                  "eng": "You work at @extra.facilityname"
+                }, 
+                "type": "reply"
+              }, 
+              {
+                "msg": {
+                  "eng": "Thank you for registering"
+                }, 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 0, 
+            "x": 82, 
+            "destination": "fe4f89bb-e32a-4715-872a-d318e00c11b3", 
+            "uuid": "0f9649ac-f5b4-4a9b-9d9b-50258e6e9090", 
+            "actions": [
+              {
+                "field": "facility_select_orgid", 
+                "type": "save", 
+                "value": "urn:uuid:1826335F-91F0-3B40-8707-F5BC46808FB2", 
+                "label": "Facility Select OrgID"
+              }, 
+              {
+                "action": "POST", 
+                "type": "api", 
+                "webhook": "http://142.222.45.58:5001/CSD/csr/dhis2_tz_test/careServicesRequest/urn:openhie.org:openinfoman-rapidpro:select_village/adapter/rapidpro/WebHook?orgid=urn%3Auuid%3ACF48E2A2-D99F-3E2C-A9F5-8C51AA0AB422&input=1"
+              }, 
+              {
+                "msg": {
+                  "eng": "Please choose from the following: @extra.menutext"
+                }, 
+                "type": "reply"
+              }
+            ]
+          }
+        ], 
+        "last_saved": "2014-12-01T15:07:30.589262Z", 
+        "entry": "0f9649ac-f5b4-4a9b-9d9b-50258e6e9090", 
+        "rule_sets": [
+          {
+            "uuid": "fe4f89bb-e32a-4715-872a-d318e00c11b3", 
+            "webhook_action": "POST", 
+            "rules": [
+              {
+                "test": {
+                  "test": {
+                    "eng": ".+"
+                  }, 
+                  "type": "regex"
+                }, 
+                "category": {
+                  "eng": "Facility Set"
+                }, 
+                "destination": "a7df4d9f-7731-4ba7-bf7f-a41a37be189c", 
+                "uuid": "e458fabb-adeb-4aa5-ac23-d9f27cdaba0e"
+              }, 
+              {
+                "test": {
+                  "type": "true"
+                }, 
+                "category": {
+                  "eng": "Other"
+                }, 
+                "destination": "d8371909-1aa3-48db-afa8-c6b14319fc39", 
+                "uuid": "eb6b13ab-6a2b-4e17-aa72-37828738ee53"
+              }
+            ], 
+            "webhook": "http://142.222.45.58:5001/CSD/csr/dhis2_tz_test/careServicesRequest/urn:openhie.org:openinfoman-rapidpro:select_village/adapter/rapidpro/WebHook?orgid==contact.facility_select_orgid&input==step.value", 
+            "label": "facilityname", 
+            "operand": "@extra.facilityname", 
+            "finished_key": null, 
+            "response_type": "C", 
+            "y": 483, 
+            "x": 185
+          }
+        ], 
+        "metadata": {
+          "notes": []
+        }
+      }, 
+      "id": 11425, 
+      "flow_type": "F", 
+      "name": "Carl's Copy of Register CHWs and SMs - Select Facility"
+    }
+  ], 
+  "triggers": []
+}

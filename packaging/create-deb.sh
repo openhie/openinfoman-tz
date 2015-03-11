@@ -133,7 +133,7 @@ do
 
     cd $PKGDIR  
 
-    if [[ -n "${DEB_SIGN_KEYID}" && -n "{$LAUNCHPADLOGIN}" ]]; then
+    if [[ -n "${DEB_SIGN_KEYID}" && -n "{$LAUNCHPADPPALOGIN}" ]]; then
 	DPKGCMD="dpkg-buildpackage -k${DEB_SIGN_KEYID}  -S -sa "
 	$DPKGCMD
 	DPUTCMD="dput ppa:$LAUNCHPADPPALOGIN/$PPA  $CHANGES"

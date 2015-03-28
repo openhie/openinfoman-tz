@@ -1,6 +1,4 @@
 <?php
-print_r($_REQUEST);
-die();
 require_once('config.php');
 require_once('lib/PixSubmitNewBirthRegistration.php');
 if (! isset($pix_url)) {

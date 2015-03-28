@@ -17,3 +17,4 @@ packaging/*/.gnupg
 packaging/builds
 pubring.gpg
 secring.gpg
+resources/webapps/rapidpro_missed_immune/config.php

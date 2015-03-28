@@ -4,11 +4,11 @@ die();
 require_once('config.php');
 require_once('lib/PixSubmitNewBirthRegistration.php');
 if (! isset($pix_url)) {
-    echo "Config \$pix_url not set in config.php\n";
+    error_log( "Config \$pix_url not set in config.php");
     exit(1);
 }
 if (! isset($pix_client_id)) {
-    echo "Config \$pix_client_id not set in config.php\n";
+    error_log("Config \$pix_client_id not set in config.php");
     exit(1);
 } 
 
@@ -22,14 +22,14 @@ $pix->ua ='Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (K
 $submission = $pix->create_submission($_REQUEST);
 
 if ($submission) {
-    echo "Sending $submission\n";
+    error_log( "Sending $submission");
     if (($pix->send($submission))) {
-	echo "Sent\n";
+	error_log( "Sent");
     } else {
-	echo "Could not send\n";
+	error_log( "Could not send");
     }
 } else {
-    echo "Invalid submission\n";
+    error_log( "Invalid submission");
 }
 
 

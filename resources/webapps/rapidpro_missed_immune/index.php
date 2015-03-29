@@ -1,4 +1,5 @@
 <?php
+error_log(print_r($_REQUEST,true));
 require_once('config.php');
 require_once('lib/PixSubmitNewBirthRegistration.php');
 if (! isset($pix_url)) {
@@ -22,9 +23,9 @@ $submission = $pix->create_submission($_REQUEST);
 if ($submission) {
     error_log( "Sending $submission");
     if (($pix->send($submission))) {
-	error_log( "Sent");
+	error_log( "Sent:\n$submission\n{$pix->output}");
     } else {
-	error_log( "Could not send");
+	error_log( "Could not send:\n$submission");
     }
 } else {
     error_log( "Invalid submission");

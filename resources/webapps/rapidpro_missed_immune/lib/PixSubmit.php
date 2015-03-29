@@ -49,7 +49,7 @@ class PixSumbit {
 	curl_setopt($ch, CURLOPT_CERTINFO, true);
 	curl_setopt($ch, CURLOPT_VERBOSE, true);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	$this->errno = $curl_errno($ch);
+	$this->errno = curl_errno($ch);
 	$this->output = curl_exec ($ch);
 	$this->error = curl_error($ch);
 	curl_close ($ch);

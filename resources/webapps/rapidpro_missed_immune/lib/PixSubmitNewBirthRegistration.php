@@ -8,29 +8,50 @@ class PixSumbitNewBirthRegistration extends PixSumbit {
 	if (!is_array($request)
 	    || !array_key_exists('birth_details',$request)
 	    ) {
+	    error_log("No birth details");
 	    return false;
 	}
 	$gender ='';
 	$birth_details=$request["birth_details"];
 	$birth_details=explode(" ",$birth_details);
-	if($birth_details[0]=="M" or $birth_details[0]=="m") {
+	if (count($birth_details) < 5) {
+	   error_log("Not enough birth details");
+	   return false;
+	}	   
+	if(strtoupper($birth_details[0])=="M") {
 	    $gender="M";
-	} else if($birth_details[0]=="K" or $birth_details[0]=="k") {
+	} else if(strtoupper($birth_details[0])=="K" or strtoupper($birth_details[0])=="F") {
 	    $gender="F";
 	} else {
+	    error_log("Bad gender");
+	    return false;
+	}
+	$mother_surname=$birth_details[3];	
+	$mother_name=$birth_details[4];
+
+
+	$year=date("Y");
+	$dd=(int) $birth_details[1];
+	$mm=(int) $birth_details[2];
+	if ( $dd < 1 || $dd > 31) {
+	   error_log("bad day ($dd)");
+	   return false;
+	}		
+	if ($mm < 1 || $mm > 12) {
+	   error_log("bad month ($mm)");
+	   return false;
+	}		
+	
+	$dob=$year . sprintf("%02d", $mm). sprintf("%02d", $dd);
+	if (! array_key_exists('orgid',$request) 
+	    || !($orgid=$request["orgid"])
+	    || ! substr($orgid,0,9) == 'urn:uuid:'
+	    || ! ($org_uuid = substr($orgid,9))
+	    ) { 
+	   error_log("No org id");
 	    return false;
 	}
 	
-	$mother_name=$birth_details[4];
-	$mother_surname=$birth_details[3];
-
-	$year=date("Y");
-	$dd=$birth_details[1];
-	$mm=$birth_details[2];
-	$dob=$year.$mm.$dd;
-	if (! ($orgid=$request["orgid"])) {
-	    return false;
-	}
 $submission='﻿<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:hl7-org:v3">
   <soap:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
     <wsa:Action wsa:mustUnderstand="1">urn:hl7-org:v3:PRPA_IN201301UV02</wsa:Action>
@@ -74,7 +95,7 @@ $submission='﻿<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelo
                   <administrativeGenderCode code="'.$gender.'"/>
                   <birthTime value="'.$dob.'"/>
                   <addr>
-                    <censusTract>'.$orgid.'</censusTract>
+                    <censusTract>'.$org_uuid.'</censusTract>
                     <postalCode>10293</postalCode>
                     <country>TZ</country>
                   </addr>

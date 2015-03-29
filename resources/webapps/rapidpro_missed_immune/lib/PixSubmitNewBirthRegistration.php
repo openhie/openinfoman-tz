@@ -5,6 +5,7 @@ require_once('PixSubmit.php');
 class PixSumbitNewBirthRegistration extends PixSumbit {
 
     function  create_submission($request) {
+    	$client_uuid = uuid_create();
 	if (!is_array($request)
 	    || !array_key_exists('birth_details',$request)
 	    ) {
@@ -77,7 +78,7 @@ $submission='﻿<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelo
       </receiver>
       <sender typeCode="SND">
         <device classCode="DEV" determinerCode="INSTANCE">
-          <id root="'.$this->pix_client_id.'"/>
+          <id root="'.$this->pix_client_id .'" />
         </device>
       </sender>
       <controlActProcess classCode="CACT" moodCode="EVN">
@@ -88,10 +89,13 @@ $submission='﻿<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelo
             <subject1 typeCode="SBJ">
               <patient classCode="PAT">
                 <!--RAPIDPRO Identifier-->
-                <id root="'.$this->pix_client_id.'" extension="5585858"/>
+                <id root="'.$this->pix_client_id.'" extension="' . $client_uuid . '"/>
                 <statusCode code="active"/>
                 <patientPerson>
-                  <name nullFlavor="NAV"/>
+                  <name use="L">
+                    <family>'.$mother_surname.'</family>
+                    <given>'.$mother_name.'</given>
+                  </name>
                   <administrativeGenderCode code="'.$gender.'"/>
                   <birthTime value="'.$dob.'"/>
                   <addr>
@@ -99,16 +103,6 @@ $submission='﻿<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelo
                     <postalCode>10293</postalCode>
                     <country>TZ</country>
                   </addr>
-                  <personalRelationship classCode="PRS">
-                    <code code="MTH"/>
-                    <statusCode code="active"/>
-                    <relationshipHolder1 determinerCode="INSTANCE">
-                      <name use="L">
-                        <family>'.$mother_surname.'</family>
-                        <given>'.$mother_name.'</given>
-                      </name>
-                    </relationshipHolder1>
-                  </personalRelationship>
                 </patientPerson>
                 <providerOrganization classCode="ORG" determinerCode="INSTANCE">
                   <id root="'.$this->pix_client_id.'"/>

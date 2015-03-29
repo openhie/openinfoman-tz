@@ -1,0 +1,370 @@
+{
+  "version": 4, 
+  "flows": [
+    {
+      "definition": {
+        "base_language": "eng", 
+        "action_sets": [
+          {
+            "y": 256, 
+            "x": 24, 
+            "destination": "ed925cda-6a78-47b5-b603-2859fb7d2b69", 
+            "uuid": "e8712b5c-5ba9-4f17-bb0c-4f02924a3379", 
+            "actions": [
+              {
+                "field": "village_select_orgid", 
+                "type": "save", 
+                "value": "@extra.orgid", 
+                "label": "Village Select Orgid"
+              }, 
+              {
+                "action": "POST", 
+                "type": "api", 
+                "webhook": "http://142.222.45.55:8984/CSD/csr/RM_TZ_Org_Hierarchy1/careServicesRequest/urn:openhie.org:openinfoman-rapidpro:select_village/adapter/rapidpro/WebHook?orgid=&input=1"
+              }, 
+              {
+                "msg": {
+                  "eng": "Please choose from the following @extra.menutext"
+                }, 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 1169, 
+            "x": 778, 
+            "destination": "ed925cda-6a78-47b5-b603-2859fb7d2b69", 
+            "uuid": "049ab8d6-937b-4198-b563-e69e7576ff8a", 
+            "actions": [
+              {
+                "field": "village_select_orgid", 
+                "type": "save", 
+                "value": "@extra.orgid", 
+                "label": "Village Select Orgid"
+              }, 
+              {
+                "msg": {
+                  "eng": "Please choose from the following @extra.menutext"
+                }, 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 518, 
+            "x": 295, 
+            "destination": "326a6920-9fef-4649-a2b9-36209b5571a7", 
+            "uuid": "3fd27e21-6c7b-4fe3-b6bc-7648418a81af", 
+            "actions": [
+              {
+                "field": "village_select_orgid", 
+                "type": "save", 
+                "value": "@extra.orgid", 
+                "label": "Village Select Orgid"
+              }, 
+              {
+                "field": "village_select_orgname", 
+                "type": "save", 
+                "value": "@extra.villagename", 
+                "label": "Village Select OrgName"
+              }, 
+              {
+                "msg": {
+                  "eng": "You work at @contact.village_select_orgname \nGive birth details in the following format:\nG DD MM FAMILYNAME/SURNAME  MOTHERNAME  PLACE OF BIRTH\nWhere\nG-Gender=K for female and M Male\nDD-Two digits date\nMM-Two digits months"
+                }, 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 169, 
+            "x": 323, 
+            "destination": "021519d5-d896-48c7-a65a-bf1a77bf10bc", 
+            "uuid": "d1b81647-4fe0-4365-a073-228d1baa75e4", 
+            "actions": [
+              {
+                "msg": {
+                  "eng": "I see you last time you registered a baby in contact.village_select_orgname.Are you registering a baby for the same village/mtaa? Please answer Yes or No"
+                }, 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 1329, 
+            "x": 313, 
+            "destination": null, 
+            "uuid": "c9555bbd-3afa-414f-b371-116d405b6366", 
+            "actions": [
+              {
+                "action": "POST", 
+                "type": "api", 
+                "webhook": "http://142.222.45.55/CR_XML/rapidpro_missed_immune?birth_details==flow.birth_details.text&orgid==contact.village_select_orgid"
+              }, 
+              {
+                "msg": {
+                  "eng": "Birth registered successfully with details @flow.birth_details.text"
+                }, 
+                "type": "reply"
+              }
+            ]
+          }
+        ], 
+        "last_saved": "2015-03-28T23:24:05.534156Z", 
+        "entry": "9a6168ad-2480-4749-b8ce-572d1512ef35", 
+        "rule_sets": [
+          {
+            "uuid": "9a6168ad-2480-4749-b8ce-572d1512ef35", 
+            "webhook_action": "POST", 
+            "rules": [
+              {
+                "test": {
+                  "test": {
+                    "eng": "Not Exist"
+                  }, 
+                  "base": "Not Exist", 
+                  "type": "starts"
+                }, 
+                "category": {
+                  "base": "Not Exist", 
+                  "eng": "Not Exist"
+                }, 
+                "destination": "e8712b5c-5ba9-4f17-bb0c-4f02924a3379", 
+                "config": {
+                  "name": "Starts with", 
+                  "operands": 1, 
+                  "type": "starts", 
+                  "voice": true, 
+                  "verbose_name": "starts with", 
+                  "localized": true
+                }, 
+                "uuid": "65d0c6c2-ab10-408b-8c7b-800beb84ac4b"
+              }, 
+              {
+                "test": {
+                  "test": {
+                    "eng": "Exist"
+                  }, 
+                  "base": "Exist", 
+                  "type": "contains_any"
+                }, 
+                "category": {
+                  "base": "Exist", 
+                  "eng": "Exist"
+                }, 
+                "destination": "d1b81647-4fe0-4365-a073-228d1baa75e4", 
+                "config": {
+                  "type": "contains_any", 
+                  "verbose_name": "has any of these words", 
+                  "name": "Contains any", 
+                  "localized": true, 
+                  "operands": 1
+                }, 
+                "uuid": "a8c31c09-6b76-4817-9f4c-a38061bab189"
+              }, 
+              {
+                "test": {
+                  "test": "true", 
+                  "type": "true"
+                }, 
+                "category": {
+                  "base": "Other", 
+                  "eng": "Other"
+                }, 
+                "destination": null, 
+                "config": {
+                  "type": "true", 
+                  "verbose_name": "contains anything", 
+                  "name": "Other", 
+                  "operands": 0
+                }, 
+                "uuid": "f6d71419-8355-4303-bd3c-19f7df2ff65f"
+              }
+            ], 
+            "webhook": "http://142.222.45.55:8984/CSD/csr/RM_TZ_Org_Hierarchy1/careServicesRequest/urn:openhie.org:openinfoman-rapidpro:village_exist/adapter/rapidpro/WebHook?orgid=contact.village_select_orgid&input=1", 
+            "label": "villageexist", 
+            "operand": "@extra.exist", 
+            "finished_key": null, 
+            "response_type": "C", 
+            "y": 0, 
+            "x": 53
+          }, 
+          {
+            "uuid": "ed925cda-6a78-47b5-b603-2859fb7d2b69", 
+            "webhook_action": "POST", 
+            "rules": [
+              {
+                "test": {
+                  "test": {
+                    "eng": "urn:uuid"
+                  }, 
+                  "base": "urn:uuid", 
+                  "type": "contains_any"
+                }, 
+                "category": {
+                  "base": "Selected Village", 
+                  "eng": "Selected Village"
+                }, 
+                "destination": "3fd27e21-6c7b-4fe3-b6bc-7648418a81af", 
+                "config": {
+                  "type": "contains_any", 
+                  "verbose_name": "has any of these words", 
+                  "name": "Contains any", 
+                  "localized": true, 
+                  "operands": 1
+                }, 
+                "uuid": "146b8736-7861-4a4f-9509-e7649c197b80"
+              }, 
+              {
+                "test": {
+                  "test": "true", 
+                  "type": "true"
+                }, 
+                "category": {
+                  "base": "Other", 
+                  "eng": "Other"
+                }, 
+                "destination": "049ab8d6-937b-4198-b563-e69e7576ff8a", 
+                "config": {
+                  "type": "true", 
+                  "verbose_name": "contains anything", 
+                  "name": "Other", 
+                  "operands": 0
+                }, 
+                "uuid": "8c6b803e-1285-439e-b5ac-24df7a106960"
+              }
+            ], 
+            "webhook": "http://142.222.45.55:8984/CSD/csr/RM_TZ_Org_Hierarchy1/careServicesRequest/urn:openhie.org:openinfoman-rapidpro:select_village/adapter/rapidpro/WebHook?orgid==contact.village_select_orgid&input==step.value", 
+            "label": "villagename", 
+            "operand": "@extra.village", 
+            "finished_key": null, 
+            "response_type": "C", 
+            "y": 984, 
+            "x": 11
+          }, 
+          {
+            "uuid": "021519d5-d896-48c7-a65a-bf1a77bf10bc", 
+            "webhook_action": null, 
+            "rules": [
+              {
+                "test": {
+                  "test": {
+                    "eng": "Yes"
+                  }, 
+                  "base": "Yes", 
+                  "type": "contains_any"
+                }, 
+                "category": {
+                  "base": "Yes", 
+                  "eng": "Yes"
+                }, 
+                "destination": "3fd27e21-6c7b-4fe3-b6bc-7648418a81af", 
+                "config": {
+                  "type": "contains_any", 
+                  "verbose_name": "has any of these words", 
+                  "name": "Contains any", 
+                  "localized": true, 
+                  "operands": 1
+                }, 
+                "uuid": "0c46082a-620f-47f0-8cf8-144f657a5008"
+              }, 
+              {
+                "test": {
+                  "test": {
+                    "eng": "No"
+                  }, 
+                  "base": "No", 
+                  "type": "contains_any"
+                }, 
+                "category": {
+                  "base": "No", 
+                  "eng": "No"
+                }, 
+                "destination": "e8712b5c-5ba9-4f17-bb0c-4f02924a3379", 
+                "config": {
+                  "type": "contains_any", 
+                  "verbose_name": "has any of these words", 
+                  "name": "Contains any", 
+                  "localized": true, 
+                  "operands": 1
+                }, 
+                "uuid": "04274dc7-db8c-4523-ae79-8f2cf0df6551"
+              }, 
+              {
+                "test": {
+                  "test": "true", 
+                  "type": "true"
+                }, 
+                "category": {
+                  "base": "All Responses", 
+                  "eng": "Other"
+                }, 
+                "config": {
+                  "type": "true", 
+                  "verbose_name": "contains anything", 
+                  "name": "Other", 
+                  "operands": 0
+                }, 
+                "uuid": "fec30e61-8cc2-4d64-b546-89c265862936"
+              }
+            ], 
+            "webhook": null, 
+            "label": "changevillage", 
+            "operand": "@step.value", 
+            "finished_key": null, 
+            "response_type": "C", 
+            "y": 378, 
+            "x": 350
+          }, 
+          {
+            "uuid": "326a6920-9fef-4649-a2b9-36209b5571a7", 
+            "webhook_action": null, 
+            "rules": [
+              {
+                "test": {
+                  "test": "true", 
+                  "type": "true"
+                }, 
+                "category": {
+                  "base": "All Responses", 
+                  "eng": "All Responses"
+                }, 
+                "destination": "c9555bbd-3afa-414f-b371-116d405b6366", 
+                "config": {
+                  "type": "true", 
+                  "verbose_name": "contains anything", 
+                  "name": "Other", 
+                  "operands": 0
+                }, 
+                "uuid": "fd79b0b2-1a6f-4aed-a0d0-2f557f87a163"
+              }
+            ], 
+            "webhook": null, 
+            "label": "birth_details", 
+            "operand": "@step.value", 
+            "finished_key": null, 
+            "response_type": "O", 
+            "y": 1198, 
+            "x": 298
+          }
+        ], 
+        "metadata": {}
+      }, 
+      "id": 13998, 
+      "flow_type": "F", 
+      "name": "Birth Registration"
+    }
+  ], 
+  "triggers": [
+    {
+      "trigger_type": "K", 
+      "flow": {
+        "name": "Birth Registration", 
+        "id": 13998
+      }, 
+      "groups": [], 
+      "keyword": "birth", 
+      "channel": null
+    }
+  ]
+}

@@ -1,3 +1,29 @@
+openinfoman-tz (1.0.10~utopic) utopic; urgency=medium
+
+  * Release Version 1.0.10
+    -a6a41a3 webui API updates
+    --http://github.com/openhie/openinfoman-tz/commmit/a6a41a3
+    -a151419 updated birth registration worklow to display response dat
+    --http://github.com/openhie/openinfoman-tz/commmit/a151419
+    -24a1e61 newbirth registration - json response with success/fail
+    --http://github.com/openhie/openinfoman-tz/commmit/24a1e61
+    -ec2c135 pix new baby-fixed name and identifier
+    --http://github.com/openhie/openinfoman-tz/commmit/ec2c135
+    -a8220ae updated birth registration flow export
+    --http://github.com/openhie/openinfoman-tz/commmit/a8220ae
+    -0b129be new birth registration is working
+    --http://github.com/openhie/openinfoman-tz/commmit/0b129be
+    -d353888 removed debug
+    --http://github.com/openhie/openinfoman-tz/commmit/d353888
+    -a7d5196 changed echo to error_log()
+    --http://github.com/openhie/openinfoman-tz/commmit/a7d5196
+    -fdfa26a updated ignore
+    --http://github.com/openhie/openinfoman-tz/commmit/fdfa26a
+    -bc90dba submit new birth registration
+    --http://github.com/openhie/openinfoman-tz/commmit/bc90dba
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 18 Jan 2016 22:46:07 -0500
+
 openinfoman-tz (1.0.9~utopic) utopic; urgency=medium
 
   * Release Version 1.0.9

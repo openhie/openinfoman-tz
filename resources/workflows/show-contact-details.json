@@ -13,7 +13,7 @@
             "uuid": "d4c839a3-13d9-4f19-9274-a69252942b4b", 
             "actions": [
               {
-                "msg": "Your Name is @contact.name \nYou Are Location Is @contact.village_select_orgname", 
+                "msg": "Your Name is @contact.name \nYour Location Is @contact.village_select_orgname", 
                 "type": "reply"
               }
             ]

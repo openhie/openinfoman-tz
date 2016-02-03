@@ -1,6 +1,4 @@
 <?php
-
-
 class PixSumbit {
     var $cert_private_key;
     var $cert_client;
@@ -12,18 +10,17 @@ class PixSumbit {
     var $error;
     var $errno;
     var $output;
+    var $client_uuid;
 
 
-    public function __construct($pix_url,$pix_client_id) {
+    public function __construct($pix_url,$pix_client_id,$client_uuid) {
 	$this->pix_url = $pix_url;
 	$this->pix_client_id = $pix_client_id;
-
+	$this->client_uuid=$client_uuid;
     }
 
     function send($content) {
 	$ch = curl_init();
-
-	
 	curl_setopt($ch, CURLOPT_URL,$this->pix_url);
 	curl_setopt($ch, CURLOPT_POST, true);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
@@ -31,6 +28,9 @@ class PixSumbit {
 	    curl_setopt($ch, CURLOPT_SSLKEY,$this->cert_private_key);
 	    curl_setopt($ch, CURLOPT_SSLKEYTYPE,"PEM"); 
 	}
+        if( $this->cert_cacert) {
+            curl_setopt($ch, CURLOPT_CAINFO,$this->cert_cacert);
+        }
 	if( $this->cert_client) {
 	    curl_setopt($ch, CURLOPT_SSLCERT, $this->cert_client);
 	    curl_setopt($ch, CURLOPT_SSLCERTTYPE,"PEM"); 

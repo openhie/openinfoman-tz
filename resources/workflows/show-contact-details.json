@@ -1,0 +1,42 @@
+{
+  "version": 4, 
+  "flows": [
+    {
+      "definition": {
+        "entry": "d4c839a3-13d9-4f19-9274-a69252942b4b", 
+        "rule_sets": [], 
+        "action_sets": [
+          {
+            "y": 0, 
+            "x": 100, 
+            "destination": null, 
+            "uuid": "d4c839a3-13d9-4f19-9274-a69252942b4b", 
+            "actions": [
+              {
+                "msg": "Your Name is @contact.name \nYou Are Location Is @contact.village_select_orgname", 
+                "type": "reply"
+              }
+            ]
+          }
+        ], 
+        "last_saved": "2015-04-14T13:11:07.039727Z", 
+        "metadata": {}
+      }, 
+      "id": 10, 
+      "flow_type": "F", 
+      "name": "Show Contact Details"
+    }
+  ], 
+  "triggers": [
+    {
+      "trigger_type": "K", 
+      "flow": {
+        "name": "Show Contact Details", 
+        "id": 10
+      }, 
+      "groups": [], 
+      "keyword": "show", 
+      "channel": null
+    }
+  ]
+}

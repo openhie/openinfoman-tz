@@ -1,0 +1,98 @@
+{
+  "version": 4, 
+  "flows": [
+    {
+      "definition": {
+        "entry": "715f884e-d8be-4bd3-82ed-8675452fe5f5", 
+        "rule_sets": [
+          {
+            "uuid": "715f884e-d8be-4bd3-82ed-8675452fe5f5", 
+            "webhook_action": null, 
+            "rules": [
+              {
+                "test": {
+                  "test": "delete", 
+                  "base": "delete", 
+                  "type": "starts"
+                }, 
+                "category": "Delete", 
+                "destination": "6bf31665-28e6-4cfb-8305-29bcca3ec646", 
+                "config": {
+                  "name": "Starts with", 
+                  "operands": 1, 
+                  "type": "starts", 
+                  "voice": true, 
+                  "verbose_name": "starts with", 
+                  "localized": true
+                }, 
+                "uuid": "d7674e31-6bc0-40fb-8665-68760660ef61"
+              }, 
+              {
+                "test": {
+                  "test": "true", 
+                  "type": "true"
+                }, 
+                "category": "Other", 
+                "config": {
+                  "type": "true", 
+                  "verbose_name": "contains anything", 
+                  "name": "Other", 
+                  "operands": 0
+                }, 
+                "uuid": "b3acc53c-ddf7-497d-bb07-ad26f26b51dd"
+              }
+            ], 
+            "webhook": null, 
+            "label": "contact_details", 
+            "operand": "@step.value", 
+            "finished_key": null, 
+            "response_type": "C", 
+            "y": 0, 
+            "x": 538
+          }
+        ], 
+        "action_sets": [
+          {
+            "y": 164, 
+            "x": 576, 
+            "destination": null, 
+            "uuid": "6bf31665-28e6-4cfb-8305-29bcca3ec646", 
+            "actions": [
+              {
+                "action": "POST", 
+                "type": "api", 
+                "webhook": "http://54.148.103.198/rapidpro/production/contacts/delete_contact.php?contact_details==flow.contact_details.text"
+              }, 
+              {
+                "msg": "@extra.response", 
+                "type": "reply"
+              }
+            ]
+          }
+        ], 
+        "last_saved": "2015-04-16T11:04:36.965562Z", 
+        "metadata": {}
+      }, 
+      "id": 8, 
+      "flow_type": "F", 
+      "name": "Delete Contact"
+    }
+  ], 
+  "triggers": [
+    {
+      "trigger_type": "K", 
+      "flow": {
+        "name": "Delete Contact", 
+        "id": 8
+      }, 
+      "groups": [
+        {
+          "name": "Administrators", 
+          "id": 8
+        }
+      ], 
+      "keyword": "delete", 
+      "channel": null
+    }
+  ]
+}

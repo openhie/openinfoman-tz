@@ -1,0 +1,221 @@
+{
+  "version": 4, 
+  "flows": [
+    {
+      "definition": {
+        "entry": "07420a9a-5691-4cc7-8553-d78c22466684", 
+        "rule_sets": [
+          {
+            "uuid": "d5f505cf-cd54-40da-a975-d576cafa59c6", 
+            "webhook_action": null, 
+            "rules": [
+              {
+                "test": {
+                  "test": "Ndiyo", 
+                  "base": "Ndiyo", 
+                  "type": "contains_any"
+                }, 
+                "category": "Ndiyo", 
+                "destination": "dcc7de13-e3e3-4aeb-9e54-727dde2ba17d", 
+                "config": {
+                  "type": "contains_any", 
+                  "verbose_name": "has any of these words", 
+                  "name": "Contains any", 
+                  "localized": true, 
+                  "operands": 1
+                }, 
+                "uuid": "bf5d6bfc-0999-4bfa-9c04-522e7f7ccd2e"
+              }, 
+              {
+                "test": {
+                  "test": "Hapana", 
+                  "base": "Hapana", 
+                  "type": "contains_any"
+                }, 
+                "category": "Hapana", 
+                "destination": "e6005d6d-ce3f-4106-99a2-68f516651867", 
+                "config": {
+                  "type": "contains_any", 
+                  "verbose_name": "has any of these words", 
+                  "name": "Contains any", 
+                  "localized": true, 
+                  "operands": 1
+                }, 
+                "uuid": "fec644a6-c457-4a5e-91ba-d628e1cce2cc"
+              }, 
+              {
+                "test": {
+                  "test": "true", 
+                  "type": "true"
+                }, 
+                "category": "Other", 
+                "destination": "1f64de72-5fa9-4a70-a617-6f4307179cdf", 
+                "config": {
+                  "type": "true", 
+                  "verbose_name": "contains anything", 
+                  "name": "Other", 
+                  "operands": 0
+                }, 
+                "uuid": "43f83cdf-7927-485b-838f-e22e15185556"
+              }
+            ], 
+            "webhook": null, 
+            "label": "CAN_VISIT", 
+            "operand": "@step.value", 
+            "finished_key": null, 
+            "response_type": "C", 
+            "y": 273, 
+            "x": 279
+          }, 
+          {
+            "uuid": "d7e48d62-1647-41f2-bc14-7a632373a222", 
+            "webhook_action": null, 
+            "rules": [
+              {
+                "test": {
+                  "test": "1 1\" \"1\" \"1", 
+                  "base": "1 1\" \"1\" \"1", 
+                  "type": "contains_any"
+                }, 
+                "category": "NOT_CHILD", 
+                "destination": "96941714-25ab-4b8b-924e-8cfa6f237c9a", 
+                "config": {
+                  "type": "contains_any", 
+                  "verbose_name": "has any of these words", 
+                  "name": "Contains any", 
+                  "localized": true, 
+                  "operands": 1
+                }, 
+                "uuid": "1a9a67dd-c82f-4bf9-9692-c904f8053f8a"
+              }, 
+              {
+                "test": {
+                  "test": "2 2\" \"2\" \"2", 
+                  "base": "2 2\" \"2\" \"2", 
+                  "type": "contains_any"
+                }, 
+                "category": "NO_FACILITY", 
+                "destination": "96941714-25ab-4b8b-924e-8cfa6f237c9a", 
+                "config": {
+                  "type": "contains_any", 
+                  "verbose_name": "has any of these words", 
+                  "name": "Contains any", 
+                  "localized": true, 
+                  "operands": 1
+                }, 
+                "uuid": "602c5062-64a6-44e4-b633-38c152d49a28"
+              }, 
+              {
+                "test": {
+                  "test": "3 3\" \"3\" \"3", 
+                  "base": "3 3\" \"3\" \"3", 
+                  "type": "contains_any"
+                }, 
+                "category": "NO_VACCINE", 
+                "destination": "96941714-25ab-4b8b-924e-8cfa6f237c9a", 
+                "config": {
+                  "type": "contains_any", 
+                  "verbose_name": "has any of these words", 
+                  "name": "Contains any", 
+                  "localized": true, 
+                  "operands": 1
+                }, 
+                "uuid": "1e627688-2f19-4a9f-b0ea-7aaf446b2c0f"
+              }, 
+              {
+                "test": {
+                  "test": "true", 
+                  "type": "true"
+                }, 
+                "category": "Other", 
+                "destination": "96941714-25ab-4b8b-924e-8cfa6f237c9a", 
+                "config": {
+                  "type": "true", 
+                  "verbose_name": "contains anything", 
+                  "name": "Other", 
+                  "operands": 0
+                }, 
+                "uuid": "50022647-b9e5-48a8-a541-05c1ab71735d"
+              }
+            ], 
+            "webhook": null, 
+            "label": "REASON", 
+            "operand": "@step.value", 
+            "finished_key": null, 
+            "response_type": "C", 
+            "y": 553, 
+            "x": 670
+          }
+        ], 
+        "action_sets": [
+          {
+            "y": 0, 
+            "x": 556, 
+            "destination": "d5f505cf-cd54-40da-a975-d576cafa59c6", 
+            "uuid": "07420a9a-5691-4cc7-8553-d78c22466684", 
+            "actions": [
+              {
+                "msg": "Mtoto wako @contact.name hakuhudhuria kupatiwa chanjo yake wiki iliyopita. Asipopata chanjo hii kwa wakati,kinga yake haitokua madhubuti. Mtoto wako ataweza kuhudhuria kituo cha afya wiki ijayo kupata chanjo hii? jibu \"Ndiyo\" au \"Hapana\"", 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 469, 
+            "x": 3, 
+            "destination": null, 
+            "uuid": "dcc7de13-e3e3-4aeb-9e54-727dde2ba17d", 
+            "actions": [
+              {
+                "msg": "Vizuri,Kama utakumbana na ugumu wowote kujua kilipo kituo cha afya tafadhali piga 0XXX XXX XXX", 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 499, 
+            "x": 341, 
+            "destination": "d7e48d62-1647-41f2-bc14-7a632373a222", 
+            "uuid": "e6005d6d-ce3f-4106-99a2-68f516651867", 
+            "actions": [
+              {
+                "msg": "Kusaidia kuboresha huduma ya chanjo Tanzania, Tungependa kufahamu kwa nini hutoweza kumpeleka mtoto wako kwa ajili ya chanjo. Jibu \"1\" Kama huyu si mtoto wako, \"2\" Kama huwezi kufika kituo cha afya, \"3\" Kama kituo chako cha afya kimeishiwa chanjo.", 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 327, 
+            "x": 884, 
+            "destination": "d5f505cf-cd54-40da-a975-d576cafa59c6", 
+            "uuid": "1f64de72-5fa9-4a70-a617-6f4307179cdf", 
+            "actions": [
+              {
+                "msg": "Samahani,Sijaelewa ulichojibu. Mtoto wako ataweza kuhudhuria kliniki wiki ijayo kupata chanjo yake? Jibu 'Ndiyo' au 'Hapana'", 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 725, 
+            "x": 760, 
+            "destination": null, 
+            "uuid": "96941714-25ab-4b8b-924e-8cfa6f237c9a", 
+            "actions": [
+              {
+                "msg": "Asante kwa mrejesho wako.\nKama utahitaji msaada wa ziada piga 0XXX XXX XXX", 
+                "type": "reply"
+              }
+            ]
+          }
+        ], 
+        "last_saved": "2015-04-14T13:23:45.295507Z", 
+        "metadata": {}
+      }, 
+      "id": 11, 
+      "flow_type": "F", 
+      "name": "Missed Appointment"
+    }
+  ], 
+  "triggers": []
+}

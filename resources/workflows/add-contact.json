@@ -1,0 +1,231 @@
+{
+  "version": 4, 
+  "flows": [
+    {
+      "definition": {
+        "entry": "4d59e136-af46-4f79-9694-543a0ecbf514", 
+        "rule_sets": [
+          {
+            "uuid": "4d59e136-af46-4f79-9694-543a0ecbf514", 
+            "webhook_action": "POST", 
+            "rules": [
+              {
+                "test": {
+                  "test": "valid", 
+                  "base": "valid", 
+                  "type": "starts"
+                }, 
+                "category": "Valid", 
+                "destination": "8f62934a-ffb5-45ad-91d7-ea2da4f675e8", 
+                "config": {
+                  "name": "Starts with", 
+                  "operands": 1, 
+                  "type": "starts", 
+                  "voice": true, 
+                  "verbose_name": "starts with", 
+                  "localized": true
+                }, 
+                "uuid": "d5935131-b612-40ad-af89-538a53f27fab"
+              }, 
+              {
+                "test": {
+                  "test": "not_valid", 
+                  "base": "not_valid", 
+                  "type": "contains_any"
+                }, 
+                "category": "Not_valid", 
+                "destination": "abc0aefd-ffaa-4f17-8895-bd74b23ecef0", 
+                "config": {
+                  "type": "contains_any", 
+                  "verbose_name": "has any of these words", 
+                  "name": "Contains any", 
+                  "localized": true, 
+                  "operands": 1
+                }, 
+                "uuid": "68129a27-9e03-459b-9bc7-91b508a258a5"
+              }, 
+              {
+                "test": {
+                  "test": "true", 
+                  "type": "true"
+                }, 
+                "category": "Other", 
+                "config": {
+                  "type": "true", 
+                  "verbose_name": "contains anything", 
+                  "name": "Other", 
+                  "operands": 0
+                }, 
+                "uuid": "90ede093-a07c-4548-8591-f8c1b1fd79dc"
+              }
+            ], 
+            "webhook": "http://54.148.103.198/rapidpro/production/contacts/check_errors.php?contact_details==step.value", 
+            "label": "contact_details", 
+            "operand": "@extra.validity", 
+            "finished_key": null, 
+            "response_type": "C", 
+            "y": 0, 
+            "x": 437
+          }, 
+          {
+            "uuid": "8a26155e-c9e7-4d82-82bd-0e62a7564dd3", 
+            "webhook_action": "POST", 
+            "rules": [
+              {
+                "test": {
+                  "test": "urn:uuid", 
+                  "base": "urn:uuid", 
+                  "type": "contains_any"
+                }, 
+                "category": "Selected Village", 
+                "destination": "fb4c404d-3616-4cc6-84f3-7cc49f1327b8", 
+                "config": {
+                  "type": "contains_any", 
+                  "verbose_name": "has any of these words", 
+                  "name": "Contains any", 
+                  "localized": true, 
+                  "operands": 1
+                }, 
+                "uuid": "7a44134e-106c-44b5-8e92-94db40306b81"
+              }, 
+              {
+                "test": {
+                  "test": "true", 
+                  "type": "true"
+                }, 
+                "category": "Other", 
+                "destination": "a1488252-609e-4183-9170-b368858ccfe4", 
+                "config": {
+                  "type": "true", 
+                  "verbose_name": "contains anything", 
+                  "name": "Other", 
+                  "operands": 0
+                }, 
+                "uuid": "69abb4a0-ed7c-4c12-94a6-5c57fb2d4340"
+              }
+            ], 
+            "webhook": "http://52.10.34.216:8984/CSD/csr/Facilities/careServicesRequest/urn:openhie.org:openinfoman-rapidpro:select_village/adapter/rapidpro/WebHook?orgid==contact.village_select_orgid&input==step.value", 
+            "label": "villagename", 
+            "operand": "@extra.village", 
+            "finished_key": null, 
+            "response_type": "C", 
+            "y": 756, 
+            "x": 9
+          }
+        ], 
+        "action_sets": [
+          {
+            "y": 254, 
+            "x": 173, 
+            "destination": "8a26155e-c9e7-4d82-82bd-0e62a7564dd3", 
+            "uuid": "8f62934a-ffb5-45ad-91d7-ea2da4f675e8", 
+            "actions": [
+              {
+                "action": "POST", 
+                "type": "api", 
+                "webhook": "http://52.10.34.216:8984/CSD/csr/Facilities/careServicesRequest/urn:openhie.org:openinfoman-rapidpro:select_village/adapter/rapidpro/WebHook?orgid==urn:uuid:D2ECA449-FEA9-3579-B80E-76096320219C&input==1"
+              }, 
+              {
+                "field": "village_select_orgid", 
+                "type": "save", 
+                "value": "@extra.orgid", 
+                "label": "Village Select Orgid"
+              }, 
+              {
+                "msg": "Please choose from the following @extra.menutext", 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 327, 
+            "x": 907, 
+            "destination": "8a26155e-c9e7-4d82-82bd-0e62a7564dd3", 
+            "uuid": "a1488252-609e-4183-9170-b368858ccfe4", 
+            "actions": [
+              {
+                "msg": "Please choose from the following @extra.menutext", 
+                "type": "reply"
+              }, 
+              {
+                "field": "village_select_orgid", 
+                "type": "save", 
+                "value": "@extra.orgid", 
+                "label": "Village Select Orgid"
+              }
+            ]
+          }, 
+          {
+            "y": 997, 
+            "x": 354, 
+            "destination": null, 
+            "uuid": "fb4c404d-3616-4cc6-84f3-7cc49f1327b8", 
+            "actions": [
+              {
+                "field": "village_select_orgid", 
+                "type": "save", 
+                "value": "@extra.orgid", 
+                "label": "Village Select Orgid"
+              }, 
+              {
+                "field": "village_select_orgname", 
+                "type": "save", 
+                "value": "@extra.villagename", 
+                "label": "Village Select OrgName"
+              }, 
+              {
+                "field": "org_code", 
+                "type": "save", 
+                "value": "@extra.orgcode", 
+                "label": "org code"
+              }, 
+              {
+                "action": "POST", 
+                "type": "api", 
+                "webhook": "http://54.148.103.198/rapidpro/production/contacts/add_contact.php?orgid==contact.village_select_orgid&contact_details==flow.contact_details.text&orgcode==contact.org_code&village==contact.village_select_orgname"
+              }, 
+              {
+                "msg": "@extra.response", 
+                "type": "reply"
+              }
+            ]
+          }, 
+          {
+            "y": 177, 
+            "x": 900, 
+            "destination": null, 
+            "uuid": "abc0aefd-ffaa-4f17-8895-bd74b23ecef0", 
+            "actions": [
+              {
+                "msg": "@extra.response", 
+                "type": "reply"
+              }
+            ]
+          }
+        ], 
+        "last_saved": "2015-10-07T03:03:54.189801Z", 
+        "metadata": {}
+      }, 
+      "id": 6, 
+      "flow_type": "F", 
+      "name": "Add Contact"
+    }
+  ], 
+  "triggers": [
+    {
+      "trigger_type": "K", 
+      "flow": {
+        "name": "Add Contact", 
+        "id": 6
+      }, 
+      "groups": [
+        {
+          "name": "Administrators", 
+          "id": 8
+        }
+      ], 
+      "keyword": "add", 
+      "channel": null
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "version": 4, 
+  "flows": [
+    {
+      "definition": {
+        "entry": "2d8ace0a-e13f-4afe-8737-161052296625", 
+        "rule_sets": [
+          {
+            "uuid": "2d8ace0a-e13f-4afe-8737-161052296625", 
+            "webhook_action": null, 
+            "rules": [
+              {
+                "test": {
+                  "test": "sajili", 
+                  "base": "sajili", 
+                  "type": "starts"
+                }, 
+                "category": "Sajili", 
+                "destination": "bc3f9b6f-dcef-47df-a6ad-372d35d7c521", 
+                "config": {
+                  "name": "Starts with", 
+                  "operands": 1, 
+                  "type": "starts", 
+                  "voice": true, 
+                  "verbose_name": "starts with", 
+                  "localized": true
+                }, 
+                "uuid": "c9f6fffd-8722-48ac-af9d-5ac26b598e0e"
+              }, 
+              {
+                "test": {
+                  "test": "true", 
+                  "type": "true"
+                }, 
+                "category": "Other", 
+                "config": {
+                  "type": "true", 
+                  "verbose_name": "contains anything", 
+                  "name": "Other", 
+                  "operands": 0
+                }, 
+                "uuid": "759e98e3-f661-4ff3-bb83-16175af2626e"
+              }
+            ], 
+            "webhook": null, 
+            "label": "birth_details", 
+            "operand": "@step.value", 
+            "finished_key": null, 
+            "response_type": "C", 
+            "y": 0, 
+            "x": 516
+          }
+        ], 
+        "action_sets": [
+          {
+            "y": 161, 
+            "x": 565, 
+            "destination": null, 
+            "uuid": "bc3f9b6f-dcef-47df-a6ad-372d35d7c521", 
+            "actions": [
+              {
+                "action": "POST", 
+                "type": "api", 
+                "webhook": "http://54.148.103.198/rapidpro/production/birth_registration/SW/index.php?birth_details==flow.birth_details.text&orgid==contact.village_select_orgid&orgcode==contact.org_code&orgname==contact.village_select_orgname"
+              }, 
+              {
+                "msg": "@extra.response @extra.error", 
+                "type": "reply"
+              }
+            ]
+          }
+        ], 
+        "last_saved": "2015-11-18T07:36:00.843553Z", 
+        "metadata": {}
+      }, 
+      "id": 13, 
+      "flow_type": "F", 
+      "name": "VE Birth Registration SW"
+    }
+  ], 
+  "triggers": [
+    {
+      "trigger_type": "K", 
+      "flow": {
+        "name": "VE Birth Registration SW", 
+        "id": 13
+      }, 
+      "groups": [], 
+      "keyword": "sajili", 
+      "channel": null
+    }
+  ]
+}

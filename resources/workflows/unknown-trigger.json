@@ -1,0 +1,42 @@
+{
+  "version": 4, 
+  "flows": [
+    {
+      "definition": {
+        "entry": "0839397b-6bbb-41fd-8f39-6b6b2338290a", 
+        "rule_sets": [], 
+        "action_sets": [
+          {
+            "y": 0, 
+            "x": 100, 
+            "destination": null, 
+            "uuid": "0839397b-6bbb-41fd-8f39-6b6b2338290a", 
+            "actions": [
+              {
+                "msg": "We don't understand what you are trying to do. SMS birth followed by birth details to register a new birth", 
+                "type": "reply"
+              }
+            ]
+          }
+        ], 
+        "last_saved": "2015-04-14T13:26:19.288730Z", 
+        "metadata": {}
+      }, 
+      "id": 12, 
+      "flow_type": "F", 
+      "name": "Unknown Trigger"
+    }
+  ], 
+  "triggers": [
+    {
+      "trigger_type": "C", 
+      "flow": {
+        "name": "Unknown Trigger", 
+        "id": 12
+      }, 
+      "groups": [], 
+      "keyword": null, 
+      "channel": null
+    }
+  ]
+}

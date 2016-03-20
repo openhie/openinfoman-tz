@@ -1,3 +1,21 @@
+openinfoman-tz (1.2.1~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.1
+    -4222021 "Release Version 1.1.1"
+    --http://github.com/openhie/openinfoman-tz/commmit/4222021
+    -371fbec Minor Change
+    --http://github.com/openhie/openinfoman-tz/commmit/371fbec
+    -2b16ace Added Rapidpro Workflows
+    --http://github.com/openhie/openinfoman-tz/commmit/2b16ace
+    -1094e4d Added kannel config,made changes on the birth registration
+    --http://github.com/openhie/openinfoman-tz/commmit/1094e4d
+    -01eea74 "Release Version 1.0.10"
+    --http://github.com/openhie/openinfoman-tz/commmit/01eea74
+    -a6a41a3 webui API updates
+    --http://github.com/openhie/openinfoman-tz/commmit/a6a41a3
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 20 Mar 2016 18:40:47 +0000
+
 openinfoman-tz (1.1.1~trusty) trusty; urgency=medium
 
   * Release Version 1.1.1

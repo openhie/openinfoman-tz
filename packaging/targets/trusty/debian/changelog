@@ -1,3 +1,11 @@
+openinfoman-tz (1.2.4~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.4
+    -071560a fixup csd_webconf references
+    --http://github.com/openhie/openinfoman-tz/commmit/071560a
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 28 Mar 2016 02:04:31 +0000
+
 openinfoman-tz (1.2.3~trusty) trusty; urgency=medium
 
   * Release Version 1.2.3

@@ -96,13 +96,11 @@ declare updating
 
 
     let $careServicesRequest := 
-      <csd:careServicesRequest>
-       <csd:function urn="{$search_name}" resource="{$doc_name}" base_url="{csd_webui:generateURL()}">
-         <csd:requestParams >
-           <csv>{$content}</csv>
-           <oid>{$s_oid}</oid>
-         </csd:requestParams>
-       </csd:function>
+      <csd:careServicesRequest  urn="{$search_name}" resource="{$doc_name}" base_url="{csd_webui:generateURL()}">
+        <csd:requestParams >
+          <csv>{$content}</csv>
+          <oid>{$s_oid}</oid>
+        </csd:requestParams>
       </csd:careServicesRequest>
     return 
        (

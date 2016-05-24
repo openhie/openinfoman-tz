@@ -11,8 +11,8 @@ let $doc_name := string($careServicesRequest/@resource)
 let $doc := csd_dm:open_document($csd_webconf:db,$doc_name)
 let $org_dir := $doc/csd:CSD/csd:organizationDirectory
 
-let $oid := $careServicesRequest/oid
-let $csv_src := $careServicesRequest/csv  
+let $oid := $careServicesRequest/csd:requestParams/oid
+let $csv_src := $careServicesRequest/csd:requestParams/csv  
 let $csv :=    csv:parse($csv_src, map{ 'header': true()})/csv/record
 
 

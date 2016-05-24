@@ -2,14 +2,14 @@ import module namespace functx = "http://www.functx.com";
 declare namespace csd = "urn:ihe:iti:csd:2013";
 declare variable $careServicesRequest as item() external;
 
-let $t_top_orgid  :=  $careServicesRequest/query[@name = 'orgid']/text()
+let $t_top_orgid  :=  $careServicesRequest/csd:requestParams/query[@name = 'orgid']/text()
 let $top_org :=  (/csd:CSD/csd:organizationDirectory/csd:organization[@entityID = $t_top_orgid])[1]
 
 
 
-let $selected_text := $careServicesRequest/query[@name = 'input']/text()
+let $selected_text := $careServicesRequest/csd:requestParams/query[@name = 'input']/text()
 (:
-let $selections := $careServicesRequest/values/item[./pair[@name = 'label' and ./text() = 'facilityselection']]
+let $selections := $careServicesRequest/csd:requestParams/values/item[./pair[@name = 'label' and ./text() = 'facilityselection']]
 let $selected_text := 
   if (count($selections) > 0)
   then

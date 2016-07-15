@@ -53,7 +53,7 @@ declare
 	     {
 	       let $function := csr_proc:get_updating_function_definition($search_name)
 	       let $oid := string($function/csd:extension[@urn='urn:openhie.org:openinfoman:adapter:resourcemap:action:upload:oid']/@type)		 
-	       let $url := csd_webui:generateURL( "CSD/csr/" , $doc_name , "/careServicesRequest/",$search_name, "/adapter/resourcemap/upload")
+	       let $url := csd_webui:generateURL(( "CSD/csr/" , $doc_name , "/careServicesRequest/",$search_name, "/adapter/resourcemap/upload"))
 	       return 
 	         <form action="{$url}" method="POST" enctype="multipart/form-data">
 		   <label for='csv' >ResourceMap Organizational Hierarchy File</label>

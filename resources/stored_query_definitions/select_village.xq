@@ -77,8 +77,9 @@ let $output :=
 	{ for $ent at $pos in ($orgs,$facs)  return concat( $pos, ") ", $ent/csd:primaryName/text())    }
       </menutext>
       <orgid>{if (exists($selected)) then string($selected/@entityID) else ()}</orgid>
-      <facility/>
-      <facilityname/>      
+      <orgcode>{if (exists($selected)) then string($selected/csd:otherID/@code) else ()}</orgcode>
+      <village>{if ($selected/csd:codedType/@code=6) then string($selected/@entityID) else ()}</village>
+      <villagename>{if ($selected/csd:codedType/@code=6) then string($selected/csd:primaryName/text()) else ()}</villagename>      
     </json>
    else <json type='object'/>
 

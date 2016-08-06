@@ -1,3 +1,21 @@
+openinfoman-tz (1.2.5~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.5
+    -a7a0a7b Exit from org hierarchy when village is selected
+    --https://github.com/openhie/openinfoman-tz/commmit/a7a0a7b
+    -0905a1e Submiting one sequence that has multiple parameters
+    --https://github.com/openhie/openinfoman-tz/commmit/0905a1e
+    -cbe7f23 Adding updated hfr_facilities_to_csd.xq
+    --https://github.com/openhie/openinfoman-tz/commmit/cbe7f23
+    -589e281 Removed hfr_facilities_to_csd.xq
+    --https://github.com/openhie/openinfoman-tz/commmit/589e281
+    -9312138 Added a stored function to query hfr facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/9312138
+    -03265b2 Adding stored function to convert hfr facility data into C
+    --https://github.com/openhie/openinfoman-tz/commmit/03265b2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 06 Aug 2016 21:51:23 +0300
+
 openinfoman-tz (1.2.4~trusty) trusty; urgency=medium
 
   * Release Version 1.2.4

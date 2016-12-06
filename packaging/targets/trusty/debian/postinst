@@ -9,7 +9,7 @@ BASEX=$OI/bin/basex
 
 
 REPOS=()
-SFS=("stored_query_definitions/select_village.xml" "stored_updating_query_definitions/rm_org_hierarchy_to_csd.xml")
+SFS=("stored_query_definitions/select_village.xml" "stored_query_definitions/select_hfr_facility.xml" "stored_updating_query_definitions/hfr_facilities_to_csd.xml" "stored_updating_query_definitions/rm_org_hierarchy_to_csd.xml")
 
 for REPO in ${REPOS[@]}
 do

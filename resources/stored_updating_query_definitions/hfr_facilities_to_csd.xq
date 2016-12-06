@@ -185,4 +185,4 @@ let $csd :=
     <csd:providerDirectory/>
   </csd:CSD>
 
-return  csd_dm:add($csd_webconf:db,$csd,$doc_name)
+return  csd_dm:add($csd,$doc_name)

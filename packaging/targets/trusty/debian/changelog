@@ -1,3 +1,19 @@
+openinfoman-tz (1.2.6~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.6
+    -6342bd2 Fixing bug on number of parameters
+    --https://github.com/openhie/openinfoman-tz/commmit/6342bd2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Tue, 06 Dec 2016 15:32:41 +0300
+
+openinfoman-tz (1.2.6~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.6
+    -6342bd2 Fixing bug on number of parameters
+    --https://github.com/openhie/openinfoman-tz/commmit/6342bd2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Tue, 06 Dec 2016 15:32:30 +0300
+
 openinfoman-tz (1.2.5~trusty) trusty; urgency=medium
 
   * Release Version 1.2.5

@@ -1,3 +1,19 @@
+openinfoman-tz (1.2.8~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.8
+    -c8a3217 Adding hfr stored function to debian package
+    --https://github.com/openhie/openinfoman-tz/commmit/c8a3217
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Tue, 06 Dec 2016 18:00:49 +0300
+
+openinfoman-tz (1.2.8~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.8
+    -c8a3217 Adding hfr stored function to debian package
+    --https://github.com/openhie/openinfoman-tz/commmit/c8a3217
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Tue, 06 Dec 2016 18:00:39 +0300
+
 openinfoman-tz (1.2.7~trusty) trusty; urgency=medium
 
   * Release Version 1.2.7

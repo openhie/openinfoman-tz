@@ -4,14 +4,14 @@
   xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:csd="urn:ihe:iti:csd:2013" 
-  xmlns="urn:ihe:iti:csd:2013" 
-  urn="urn:openhie.org:openinfoman-tz:hfr_facilities_to_csd"
+  xmlns:csd="urn:ihe:iti:csd:2013"
+  xmlns="urn:ihe:iti:csd:2013"
+  urn="urn:openhie.org:openinfoman:hfr_facilities_to_csd"
   >
-  <description> 
+  <csd:description>
     Updates the CSD document by an import from Health Facility Registry export of the Organizational hierarchy
-  </description>
-  <definition ><xi:include parse='text' href='hfr_facilities_to_csd.xq'/></definition>
+  </csd:description>
+  <csd:definition ><xi:include parse='text' href='hfr_facilities_to_csd.xq'/></csd:definition>
   <xforms:instance>
     <careServicesRequest>
       <dxf/>

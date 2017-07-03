@@ -5,8 +5,8 @@ function get_orgs() {
 	$url = "http://resourcemap.instedd.org/en/collections/1652/fields.json";
 	$url1 = "http://resourcemap.instedd.org/api/collections/1652.json?Admin_div[under]=TZ.NT.AS.KR.4.10&human=true";
 	$url1 = "http://resourcemap.instedd.org/api/collections/1652.json?human=true";
-	$username = "allyshaban5@gmail.com";
-	$password = "Mw@n@m1gu";
+	$username = "";
+	$password = "";
 	curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
 	curl_setopt($ch, CURLOPT_URL, $url);
 	$data = curl_exec($ch);

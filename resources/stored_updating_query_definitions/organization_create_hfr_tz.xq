@@ -31,7 +31,7 @@ let $org :=
 if (($name) and ($level)  and ($urn) )
      then
        <csd:organization entityID="{$urn}">
-	 <csd:otherID assigningAuthorityName='http://hfrportal.ehealth.go.tz' code="code">{$id}</csd:otherID>
+	 <csd:otherID assigningAuthorityName='http://hfrportal.ehealth.go.tz' code="code">{string($id)}</csd:otherID>
 	 <csd:codedType code="{$level}" codingScheme='2.25.123494412831734081331965080571820180508'/>
 	 <csd:primaryName>{$name}</csd:primaryName>
 	 {$parent}

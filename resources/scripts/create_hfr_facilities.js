@@ -30,7 +30,7 @@ server.listen(8888);
 
   function get_facility_parent(admin_div,callback) {
     var csd_msg = `<csd:requestParams xmlns:csd="urn:ihe:iti:csd:2013">
-                    <csd:otherID assigningAuthorityName="resource_map_tanzania" code="${admin_div}"/>
+                    <csd:otherID assigningAuthorityName="http://hfrportal.ehealth.go.tz" code="code">${admin_div}</csd:otherID>
                    </csd:requestParams>`
      var url = "http://localhost:8984/CSD/csr/hfr/careServicesRequest/urn:openhie.org:openinfoman-hwr:stored-function:organization_get_urns"
      var options = {
@@ -62,6 +62,7 @@ server.listen(8888);
                         <csd:facility id="${id}" code="${code}">
                           <csd:parent id="${parent_id}" />
                           <csd:name>${name}</csd:name>
+                          <csd:type>${fac_type}</csd:type>
                         </csd:facility>
                        </csd:requestParams>`
          var options = {

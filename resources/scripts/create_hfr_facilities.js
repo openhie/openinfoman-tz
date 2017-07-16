@@ -26,7 +26,7 @@ var server = http.createServer(function(req, res) {
 
 server.listen(8888);
 
-  get_facilities("http://resourcemap.instedd.org/api/collections/1652.json?human=false")
+  get_facilities("http://resourcemap.instedd.org/api/collections/409.json?human=false")
 
   function get_facility_parent(admin_div,callback) {
     var csd_msg = `<csd:requestParams xmlns:csd="urn:ihe:iti:csd:2013">

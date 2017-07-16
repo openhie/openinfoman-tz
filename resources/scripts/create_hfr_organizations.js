@@ -26,7 +26,7 @@ var server = http.createServer(function(req, res) {
 
 server.listen(8888);
 
-  var url = "http://resourcemap.instedd.org/en/collections/1652/fields/13274"
+  var url = "http://resourcemap.instedd.org/en/collections/409/fields/13274"
   var username = ""
   var password = ""
   var orgs = []

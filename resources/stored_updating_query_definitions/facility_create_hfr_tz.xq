@@ -22,15 +22,17 @@ let $urn := $uuid_generate($id)
 let $parent := <csd:organizations><csd:organization entityID="{$pid}"/></csd:organizations>
 let $name := $careServicesRequest/facility/name
 let $type := $careServicesRequest/facility/type
+let $time := current-dateTime()
 let $fac :=
 if (($name) and ($id)  and ($urn) )
      then
        <csd:facility entityID="{$urn}">
 	 <csd:otherID assigningAuthorityName='http://hfrportal.ehealth.go.tz' code='id'>{string($id)}</csd:otherID>
    <csd:otherID assigningAuthorityName='http://hfrportal.ehealth.go.tz' code='Fac_IDNumber'>{string($code)}</csd:otherID>
-   <csd:extension type='facility_type' urn='urn:uuid:hfrportal:ehealth:go:tz'><facility_type>{string($type)}</facility_type></csd:extension>
+   <csd:extension type='facilityType' urn='urn:uuid:hfrportal:ehealth:go:tz'><facilityType>{string($type)}</facilityType></csd:extension>
 	 <csd:primaryName>{string($name)}</csd:primaryName>
 	 {$parent}
+   <csd:record created="{$time}" updated="{$time}" status="Active" sourceDirectory="http://hfrportal.ehealth.go.tz"/>
        </csd:facility>
      else ()  (:no name or id or type :)
 

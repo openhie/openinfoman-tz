@@ -20,6 +20,7 @@ let $name := $careServicesRequest/organization/name/text()
 let $pid := $careServicesRequest/organization/parent/@id
 let $pname := $careServicesRequest/organization/parent/@name
 let $urn := $uuid_generate(concat($name,$id))
+let $time := current-dateTime()
 let $parent :=
      if ($pid)
      then
@@ -35,6 +36,7 @@ if (($name) and ($level)  and ($urn) )
 	 <csd:codedType code="{$level}" codingScheme='2.25.123494412831734081331965080571820180508'/>
 	 <csd:primaryName>{$name}</csd:primaryName>
 	 {$parent}
+   <csd:record created="{$time}" updated="{$time}" status="Active" sourceDirectory="http://hfrportal.ehealth.go.tz"/>
        </csd:organization>
      else ()  (:no name or id or type :)
 

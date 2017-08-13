@@ -1,4 +1,6 @@
 <?php
+set_time_limit(0);
+ini_set('memory_limit', '2000M');
 abstract class entityMatch {
     protected $host;
     protected $src_doc_name;
@@ -50,29 +52,16 @@ abstract class entityMatch {
     public function retrieve_target_entities( $entity_ids) {
         return $this->retrieve_entities($this->target_doc_name,$entity_ids);
     }
-    public function retrieve_entities( $doc_name,$entity_ids) {
-        $results =array();
-        foreach ($entity_ids as $entity_id) {
-            if (array_key_exists($doc_name,$this->entity_cache)
-                && array_key_exists($entity_id,$this->entity_cache[$doc_name])) {
-                $entity = $this->entity_cache[$doc_name][$entity_id];
-            } else {
-                $csr = "
+
+    public function retrieve_entities( $doc_name,$entity_type) {
+      $results =array();
+              $csr = "
 <csd:requestParams xmlns:csd='urn:ihe:iti:csd:2013'>
-    <csd:id entityID='$entity_id'/>
+
 </csd:requestParams>";
-                $urn ="urn:ihe:iti:csd:2014:stored-function:{$this->entity_type}-search";
-                $entity = $this->exec_request($doc_name,$csr,$urn);
-                if (!array_key_exists($doc_name,$this->entity_cache)) {
-                    $this->entity_cache[$doc_name] = array();
-                }
-                $this->entity_cache[$doc_name][$entity_id] = $entity;
-            }
-            if ($entity) {
-                $results[] = $entity;
-            }
-        }
-        return $results;
+              $urn ="urn:openhie.org:openinfoman-hwr:stored-function:{$entity_type}_get_all";
+              $entity = $this->exec_request($doc_name,$csr,$urn);
+      return $entity;
     }
 
 
@@ -139,7 +128,7 @@ abstract class entityMatch {
     public function is_marked_duplicate($id1,$id2 ) {
         $entity2 = $this->retrieve_entities($this->target_doc_name,array($id2));
         foreach($entity2 as $ent2)
-        if ($this->extract($ent2,"/csd:otherID[@assigningAuthorityName='https://vims.moh.go.tz' and @code='vimsid' and ./text()='{$id1}']",false)) {
+        if ($this->extract($ent2,"/csd:otherID[@assigningAuthorityName='https://vims.moh.go.tz' and @code='id' and ./text()='{$id1}']",false)) {
             return true;
         } else {
             return false;
@@ -158,13 +147,9 @@ abstract class entityMatch {
 
     protected $entity_xml_cache = array();
     public function extract($entity,$xpath,$implode = true) {
-        if (array_key_exists($entity,$this->entity_xml_cache)) {
-            $entity_xml = $this->entity_xml_cache[$entity];
-        } else {
-            $entity_xml = new SimpleXMLElement($entity);
+            //$entity_xml = new SimpleXMLElement($entity);
+            $entity_xml = $entity;
             $entity_xml->registerXPathNamespace ( "csd" , "urn:ihe:iti:csd:2013");
-            $this->entity_xml_cache[$entity] = $entity_xml;
-        }
         $xpath_pre = "(/csd:CSD/*/csd:{$this->entity_type})[1]";
         $results =  $entity_xml->xpath($xpath_pre . $xpath);
         if ($implode && is_array($results)) {
@@ -218,25 +203,96 @@ class entityMatchPotentialDuplicates extends entityMatch {
 }
 
 class entityMatchLevenshtein extends entityMatch {
-	 public $target_entity_names=array();
-    public function find_matching_entities($src_entity_id,$src_entity_name,$vimsid) {
-        $rankings = array();
-        $target_entities = array();
-        if(count($this->target_entity_names)==0)
-        $target_entities=$this->get_target_entity_ids(0, -1);
-        else
-        $source_entities=array();
-        foreach ($target_entities as $target_entity_id) {
+	 public $target_entities=array();
+    public function cache_vims_facilities($doc_name) {
+      $limit_districts = array("Handeni DC","Bumbuli","Handeni TC","Kilindi","Korogwe DC","Korogwe TC","Lushoto","Mkinga","Muheza","Pangani","Tanga CC");
+      $entities = $this->retrieve_entities($doc_name,$this->entity_type);
+      $entities = new SimpleXMLElement($entities);
+      foreach ($entities->facilityDirectory->children("urn:ihe:iti:csd:2013") as $facility) {
+        $uuid = (string)$facility->attributes()->entityID;
+        $name = (string)$facility->primaryName;
+        $parents = array();
+        foreach($facility->otherID as $otherID) {
+          if($otherID->attributes()->code == "code")
+          $code = (string)$otherID;
+          else if($otherID->attributes()->code == "id")
+          $id = (string)$otherID;
+        }
 
-            $target_entity = $this->retrieve_entities($this->target_doc_name,array($target_entity_id));
-            foreach($target_entity as $ent) {
-            	if(array_key_exists($target_entity_id,$this->target_entity_names))
-            	continue;
-            	$this->target_entity_names["$target_entity_id"] = $this->extract($ent,$this->name_path,false);
-              $this->target_entity_ids["$target_entity_id"] = $this->extract($ent,'/csd:otherID[@code="dhisid"]',false);
-            }
-         }
-       $strs=explode(" ",$src_entity_name);
+        foreach($facility->extension as $extensions) {
+          if($extensions->attributes()->type == "geographicZone")
+          $district = (string)$extensions;
+          if($extensions->attributes()->type == "facilityType")
+          $facilityType = (string)$extensions;
+        }
+
+        if(!in_array($district,$limit_districts))
+        continue;
+
+        $facDetails[$doc_name][$uuid]["name"] = $name;
+        $facDetails[$doc_name][$uuid]["id"] = $id;
+        $facDetails[$doc_name][$uuid]["code"] = $code;
+        $facDetails[$doc_name][$uuid]["district"] = $district;
+        $facDetails[$doc_name][$uuid]["facilityType"] = $facilityType;
+      }
+      return $facDetails;
+    }
+
+    public function cache_hfr_facilities($doc_name) {
+      $entities = $this->retrieve_entities($doc_name,$this->entity_type);
+      $entities = new SimpleXMLElement($entities);
+      foreach ($entities->facilityDirectory->children("urn:ihe:iti:csd:2013") as $facility) {
+        $uuid = (string)$facility->attributes()->entityID;
+        $name = (string)$facility->primaryName;
+        $parents = array();
+        foreach($facility->organizations->children("urn:ihe:iti:csd:2013") as $organization) {
+          $parents[] = (string)$organization->attributes()->entityID;
+        }
+        foreach($facility->otherID as $otherID) {
+          if($otherID->attributes()->assigningAuthorityName == "https://vims.moh.go.tz" and $otherID->attributes()->code == "id")
+            $vimsid = (string)$otherID;
+        }
+        $facDetails[$doc_name][$uuid]["name"] = $name;
+        $facDetails[$doc_name][$uuid]["parents"] = $parents;
+        $facDetails[$doc_name][$uuid]["uuid"] = $uuid;
+        if($vimsid)
+        $facDetails[$doc_name][$uuid]["vimsid"] = $vimsid;
+      }
+      return $facDetails;
+    }
+
+    public function cache_hfr_orgs ($doc_name) {
+      $entities = $this->retrieve_entities($doc_name,"organization");
+      $entities = new SimpleXMLElement($entities);
+      foreach ($entities->organizationDirectory->children("urn:ihe:iti:csd:2013") as $organization) {
+        $uuid = (string)$organization->attributes()->entityID;
+        $name = (string)$organization->primaryName;
+        $parent = (string)$organization->parent->attributes()->entityID;
+        $level = (string)$organization->codedType->attributes()->code;
+        $orgDetails[$doc_name][$uuid]["name"] = $name;
+        $orgDetails[$doc_name][$uuid]["parent"] = $parent;
+        $orgDetails[$doc_name][$uuid]["uuid"] = $uuid;
+        $orgDetails[$doc_name][$uuid]["level"] = $level;
+      }
+      return $orgDetails;
+    }
+
+    public function get_org_hierarchy($orguuid) {
+      $orgs = $this->target_orgs_entities[$this->target_doc_name][$orguuid];
+      if($this->hierarchy)
+      $this->hierarchy .= ",".$orgs["name"];
+      else
+      $this->hierarchy = $orgs["name"];
+      if($orgs["level"] > 4) {
+        $this->get_org_hierarchy($orgs["parent"]);
+      }
+      else {
+        return $this->hierarchy;
+      }
+    }
+
+    public function find_matching_entities($src_entity_id,$src_entity_name,$vimsid) {
+      $strs=explode(" ",$src_entity_name);
 		 foreach($strs as $k=>$str)
 			if($str=="")
 			unset($strs[$k]);
@@ -244,22 +300,28 @@ class entityMatchLevenshtein extends entityMatch {
 		 $src_entity_name=str_replace(" ","",$src_entity_name);
 		 $this->shortest = -1;
 		 $rankings=array();
-       foreach ($this->target_entity_names as $target_entity_id=>$target_entity_name) {
+       foreach ($this->target_entities[$this->target_doc_name] as $target_entity_id=>$target_entity) {
+         $this->hierarchy = "";
+         if(!array_key_exists("hierarchy",$target_entity)) {
+           $this->get_org_hierarchy($target_entity["parents"][0]);
+           error_log("getting parent for ".$target_entity["name"]);
+           $this->target_entities[$this->target_doc_name][$target_entity_id]["hierarchy"] = $this->hierarchy;
+           $target_entity["hierarchy"] = $this->hierarchy;
+          }
        	//if it is already marked as duplicate then lev=0
-        $target = array("name"=>$target_entity_name,
-                        "id"=>$this->target_entity_ids["$target_entity_id"]
-                      );
-       	if ($this->is_marked_duplicate($vimsid,$target_entity_id)) {
-            		$lev=0;
-            		$rankings['dup'][$target_entity_id]=$target;
-                	continue;
-            }
-       	$strs=explode(" ",$target_entity_name);
+        if(array_key_exists("vimsid",$target_entity) and $target_entity["vimsid"] == $vimsid) {
+      		$lev=0;
+      		$rankings['dup'][$target_entity_id]=$target_entity;
+          return $rankings;
+        }
+
+       	$strs=explode(" ",$target_entity["name"]);
 			foreach($strs as $k=>$str)
 			if($str=="")
 			unset($strs[$k]);
 			$target_entity_name=implode(" ",$strs);
 			if(count($strs)==2) {
+        $strs = array_values($strs);
 				$str1=implode(" ",$strs);
 				$str2=$strs[1]." ".$strs[0];
 				//join the two words by removing space
@@ -278,11 +340,11 @@ class entityMatchLevenshtein extends entityMatch {
 			$lev = levenshtein(trim(strtolower($src_entity_name)), trim(strtolower($target_entity_name)));
 
 			if(count($rankings)==0) {
-			     $rankings[$lev][$target_entity_id]=$target;
+			     $rankings[$lev][$target_entity_id]=$target_entity;
       }
 			else {
 				if(array_key_exists($lev,$rankings) or count($rankings)<5) {
-					$rankings[$lev][$target_entity_id]=$target;
+					$rankings[$lev][$target_entity_id]=$target_entity;
 				}
 				else {
 					$existing_levs=array_keys($rankings);
@@ -290,7 +352,7 @@ class entityMatchLevenshtein extends entityMatch {
 					$rank=$rankings;
 					if($lev<$max) {
 						unset($rankings[$max]);
-						$rankings[$lev][$target_entity_id]=$target;
+						$rankings[$lev][$target_entity_id]=$target_entity;
 					}
 				}
 			}
@@ -317,7 +379,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
 		else {
 			$csr = "<csd:requestParams xmlns:csd='urn:ihe:iti:csd:2013'>
 							<csd:id entityID='$target_id'/>
-							<csd:otherID assigningAuthorityName='https://vims.moh.go.tz' code='vimsid'>$source_id</csd:otherID>
+							<csd:otherID assigningAuthorityName='https://vims.moh.go.tz' code='id'>$source_id</csd:otherID>
 					  </csd:requestParams>";
 			$urn = "urn:openhie.org:openinfoman-hwr:stored-function:facility_create_otherid";
 			$entity_match->exec_request($_POST["target_doc_name"],$csr,$urn);
@@ -392,26 +454,18 @@ echo "</table>";
 $count=++$first_row;
 echo "<table border='1' cellspacing='0'><tr style='background-color:black;color:white'><th>SN</th><th>$src_doc_name</th><th>Marked As A Match In $target_doc_name</th><th>Possible Matches From $target_doc_name</th></tr>";
 
-$src_entities=$entity_match->get_src_entity_ids( $first_row,$max_rows );
-foreach ($src_entities as $entity_id) {
-	$entity = $entity_match->retrieve_entities($src_doc_name,array($entity_id));
-	foreach($entity as $ent) {
-  		$entity_names[] = $entity_match->extract($ent,$entity_match->name_path,false);
-      $entity_ids[] = $entity_match->extract($ent,'/csd:otherID[@code="id"]',false);
-      $entity_codes[] = $entity_match->extract($ent,'/csd:otherID[@code="code"]',false);
-      $entity_districts[] = $entity_match->extract($ent,'/csd:extension[@type="geographicZone"]',false);
-      $entity_types[] = $entity_match->extract($ent,'/csd:extension[@type="facilityType"]',false);
-   }
+$entity_match->target_entities = $entity_match->cache_hfr_facilities($target_doc_name);
+$entity_match->target_orgs_entities = $entity_match->cache_hfr_orgs($target_doc_name);
+$entity_match->source_entities = $entity_match->cache_vims_facilities($src_doc_name);
 
-  foreach($entity_names as $key=>$entity_name) {
-    $vimsid = $entity_ids[$key];
-    $vimscode = $entity_codes[$key];
-    $vimsdistrict = $entity_districts[$key];
-    $vimsftype = $entity_types[$key];
-  }
-
-	$rankings = $entity_match->find_matching_entities($entity_id,$entity_name,$vimsid);
-	echo "<tr><td>$count</td><td><input type='hidden' name=source[$vimsid] value=".$vimsid.">".$entity_name;
+foreach ($entity_match->source_entities[$src_doc_name] as $entity_id=>$entity) {
+  $vimsid = $entity["id"];
+  $vimscode = $entity["code"];
+  $vimsdistrict = $entity["district"];
+  $vimsftype = $entity["facilityType"];
+  $vimsname = $entity["name"];
+	$rankings = $entity_match->find_matching_entities($entity_id,$vimsname,$vimsid);
+	echo "<tr><td>$count</td><td><input type='hidden' name=source[$vimsid] value=".$vimsid.">".$vimsname;
   echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;ID: $vimsid";
   echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;Code: $vimscode";
   echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;Type: $vimsftype";
@@ -420,10 +474,13 @@ foreach ($src_entities as $entity_id) {
 	$count++;
 		//Display entity which is already marked as duplicate and unset the key
 		if(array_key_exists('dup',$rankings)) {
+      error_log("Dup Found");
 			echo "<td>";
-			foreach($rankings['dup'] as $values){
+			foreach($rankings['dup'] as $uuid=>$values){
+        error_log("Deeper");
 			echo $values["name"];
-      echo "<br>&nbsp;&nbsp;&nbsp;ID: ".$values["id"];
+      echo "<br>&nbsp;&nbsp;&nbsp;ID: ".$uuid;
+      echo "<br>&nbsp;&nbsp;&nbsp;Hierarchy: ".$values["hierarchy"];
       echo "</br>";
       }
 			unset($rankings['dup']);
@@ -439,7 +496,8 @@ foreach ($src_entities as $entity_id) {
    		echo "<font color='$colors[$match_index]'><label id=label$lev$vimsid onclick='show(`$lev$vimsid`,`$level_message`)'><b>+</b>Show The $level_message</label><br><div id='$lev$vimsid' style='display:none'>";
    		foreach($rankings_pull as $id=>$close) {
    			echo "<input type='radio' name='target[$vimsid]' value='$id'>".$close["name"];
-        echo "<br>&nbsp;&nbsp;ID: ".$close["id"];
+        echo "<br>&nbsp;&nbsp;ID: ".$close["uuid"];
+        echo "<br>&nbsp;&nbsp;Hierarchy: ".$close["hierarchy"];
         echo "<br>";
    		}
    		echo "</div></font>";

@@ -8,10 +8,24 @@ function initialize_curl() {
    return $ch;
 }
 
+/*
 function getVIMSFac () {
 	$content = file('VIMS_facilities_codes.csv');
 	$rows = array_map('str_getcsv', $content,array_fill(0, count($content), ","));
 	return $rows;
+}
+*/
+
+function getVIMSFac () {
+	$username = "";
+	$password = "";
+	$ch = initialize_curl();
+	curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
+	$url = 'https://vimstraining.elmis-dev.org:443/rest-api/facilities/'.$code;
+	curl_setopt($ch, CURLOPT_URL, $url);
+	$details = curl_exec($ch);
+	$details = json_decode($details,true);
+	return $details;
 }
 
 function createCSDFacility($facDetails) {

@@ -9,7 +9,7 @@ BASEX=$OI/bin/basex
 
 
 REPOS=()
-SFS=("stored_query_definitions/select_village.xml" "stored_query_definitions/select_hfr_facility.xml" "stored_updating_query_definitions/hfr_facilities_to_csd.xml" "stored_updating_query_definitions/rm_org_hierarchy_to_csd.xml")
+SFS=("stored_query_definitions/select_village.xml" "stored_query_definitions/select_hfr_facility.xml" "stored_updating_query_definitions/hfr_facilities_to_csd.xml" "stored_updating_query_definitions/rm_org_hierarchy_to_csd.xml" "facility_create_dhis_tz.xml" "facility_create_dvs_tz.xml" "facility_create_hfr_tz.xml" "facility_create_vims_tz.xml" "organization_create_dhis_tz.xml" "organization_create_hfr_tz.xml")
 
 for REPO in ${REPOS[@]}
 do
@@ -20,11 +20,9 @@ done
 for SF in ${SFS[@]}
 do
   cd $OI
-  $OI/resources/scripts/install_stored_function.php $OI/resources/$SF 
+  $OI/resources/scripts/install_stored_function.php $OI/resources/$SF
   if [[ $? != 0 ]]; then exit 1; fi
 done
 
 
 chown -R $USERNAME:$USERNAME $OI
-
-

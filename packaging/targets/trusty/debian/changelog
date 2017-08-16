@@ -1,3 +1,43 @@
+openinfoman-tz (1.2.9~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.9
+    -bcb7951 Adding link to entity merging,Adding stored functions to u
+    --https://github.com/openhie/openinfoman-tz/commmit/bcb7951
+    -14fe70d Adding Facility Mathing Tool
+    --https://github.com/openhie/openinfoman-tz/commmit/14fe70d
+    -c5d48e9 Adding record status
+    --https://github.com/openhie/openinfoman-tz/commmit/c5d48e9
+    -4b807e3 Displaying fac_type in extension
+    --https://github.com/openhie/openinfoman-tz/commmit/4b807e3
+    -200b873 fixing standard issu
+    --https://github.com/openhie/openinfoman-tz/commmit/200b873
+    -a26b7ef replacing php script with nodejs script to increase perfor
+    --https://github.com/openhie/openinfoman-tz/commmit/a26b7ef
+    -289fb08 Adding stored function to create HFR facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/289fb08
+    -02b5040 Minor changes
+    --https://github.com/openhie/openinfoman-tz/commmit/02b5040
+    -04e639b Adding script to fetch HFR orgs
+    --https://github.com/openhie/openinfoman-tz/commmit/04e639b
+    -6c67172 Changing urn
+    --https://github.com/openhie/openinfoman-tz/commmit/6c67172
+    -e3db0a1 Adding stored function to create organization hierarchy fr
+    --https://github.com/openhie/openinfoman-tz/commmit/e3db0a1
+    -5c392a1 Adding scripts to fetch and add VIMS and DHIS2 facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/5c392a1
+    -1d4b7c2 Adding script to merge VIMS and DHIS2 facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/1d4b7c2
+    -83ed2c3 Extra modifications for VIMS
+    --https://github.com/openhie/openinfoman-tz/commmit/83ed2c3
+    -3291389 Creating facilities from VIMS
+    --https://github.com/openhie/openinfoman-tz/commmit/3291389
+    -1aa924d creating facility from DHIS2 and HFR
+    --https://github.com/openhie/openinfoman-tz/commmit/1aa924d
+    -d51fd75 Creating orgs
+    --https://github.com/openhie/openinfoman-tz/commmit/d51fd75
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 16 Aug 2017 11:00:54 +0300
+
 openinfoman-tz (1.2.8~trusty) trusty; urgency=medium
 
   * Release Version 1.2.8

@@ -108,7 +108,7 @@ echo "<td>Source CSD Document</td><td><select name='src_doc_name'>".display_docs
 </select></td>
 ";
 ?>
-<td></td><td><input type='button' value='Find Duplicates' name='set_docs' onclick='display_report("","","")'></td>
+<td></td><td><input type='button' value='Load Facilities' name='set_docs' onclick='display_report("","","")'></td>
 </tr></table>
 </center></form>
 <?php

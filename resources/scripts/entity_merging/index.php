@@ -6,14 +6,81 @@
 <link rel="stylesheet" type="text/css" media="screen" href="http://localhost:8984/static/bootstrap/js/tab.js">
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<link rel="stylesheet" href="css/bootstrap-3.1.1.min.css" type="text/css" />
+<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css" />
+
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
 <script>
+$(function() {
+
+    $('#chkveg').multiselect({
+				enableCaseInsensitiveFiltering: true,
+        includeSelectAllOption: true
+    });
+});
+
+function get_districts() {
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	xmlhttp.onreadystatechange=function()
+	  {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	    {
+	    document.getElementById("districts").innerHTML=xmlhttp.responseText;
+	    }
+	  }
+	xmlhttp.open("GET","merge_entities_JSP.php",true);
+	xmlhttp.send();
+}
+
+function clear_search(id) {
+	document.getElementById("search"+id).innerHTML = ""
+}
+
+function search_target(search_target,id)
+{
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+			if(xmlhttp.responseText == null || xmlhttp.responseText == undefined || xmlhttp.responseText == false)
+			document.getElementById("search"+id).innerHTML = ""
+			else
+    	document.getElementById("search"+id).innerHTML=xmlhttp.responseText;
+    }
+  }
+var target_doc = document.docs.target_doc_name.value
+xmlhttp.open("GET","merge_entities_JSP.php?search_target="+search_target+"&vimsid="+id+"&target_doc="+target_doc,true);
+xmlhttp.send();
+}
+
 function display_report(from,change_page,total_page)
 {
 	document.getElementById("report").innerHTML="<center><font><img width=\"70\" height=\"70\" src=\"http://localhost:8984/static/loading.gif\"></center>"
 	var src_doc = document.docs.src_doc_name.value
 	var target_doc = document.docs.target_doc_name.value
 	var entity_type = document.docs.entity_type.value
+	var districts = $('#chkveg').val()
 	var max_rows = document.docs.max_rows.value
+	var favorite = [];
+
 if (window.XMLHttpRequest)
   {// code for IE7+, Firefox, Chrome, Opera, Safari
   xmlhttp=new XMLHttpRequest();
@@ -30,10 +97,10 @@ xmlhttp.onreadystatechange=function()
     }
   }
   if(from=="page") {
-	xmlhttp.open("GET","merge_entities_JSP.php?page="+change_page+"&total_page="+total_page+"&src_doc="+src_doc+"&target_doc="+target_doc+"&entity_type="+entity_type+"&max_rows="+max_rows,true);
+	xmlhttp.open("GET","merge_entities_JSP.php?page="+change_page+"&total_page="+total_page+"&districts="+districts+"&src_doc="+src_doc+"&target_doc="+target_doc+"&entity_type="+entity_type+"&max_rows="+max_rows,true);
   }
   else
-xmlhttp.open("GET","merge_entities_JSP.php?src_doc="+src_doc+"&target_doc="+target_doc+"&entity_type="+entity_type+"&max_rows="+max_rows,true);
+xmlhttp.open("GET","merge_entities_JSP.php?districts="+districts+"&src_doc="+src_doc+"&target_doc="+target_doc+"&entity_type="+entity_type+"&max_rows="+max_rows,true);
 xmlhttp.send();
 }
 
@@ -81,20 +148,20 @@ function show(id,level_message) {
         </span>
       </div>
     </div>
-<form action="#" name="docs">
 <center>
+<form action="#" name="docs" method="POST">
 <table><tr>
 <?php
 $host="http://localhost:8984/CSD";
 $docs=get_docs();
-echo "<td>Source CSD Document</td><td><select name='src_doc_name'>".display_docs($docs)."</select></td>
+echo "<td>Source CSD Document</td><td><select name='src_doc_name'>".display_docs($docs,'src_doc_name')."</select></td>
 <td>Entity Type</td><td><select name='entity_type'>
 <option value='facility'>Facility</option>
 <option value='provider'>Provider</option>
 <option value='organization'>Organization</option>
 <option value='service'>Service</option>
 </select></td></tr><tr>
-<td>Target CSD Document</td><td><select name='target_doc_name'>".display_docs($docs)."</select></td>
+<td>Target CSD Document</td><td><select name='target_doc_name'>".display_docs($docs,'target_doc_name')."</select></td>
 <td>Rows Per Page</td><td><select name='max_rows'>
 <option>2</option>
 <option>5</option>
@@ -108,8 +175,19 @@ echo "<td>Source CSD Document</td><td><select name='src_doc_name'>".display_docs
 </select></td>
 ";
 ?>
-<td></td><td><input type='button' value='Load Facilities' name='set_docs' onclick='display_report("","","")'></td>
-</tr></table>
+<td></td><td><input type='submit' name='get_districts' value='Get Districts'></td>
+</tr>
+<?php
+if(isset($_POST["get_districts"])) {
+echo "<tr><td>";
+display_districts();
+?>
+</td>
+<td><input type='button' value='Load Facilities' name='set_docs' onclick='display_report("","","")'></td>
+<?php
+}
+?>
+</table>
 </center></form>
 <?php
 
@@ -125,16 +203,39 @@ echo "<td>Source CSD Document</td><td><select name='src_doc_name'>".display_docs
 		return $docs;
     	}
 
-   function display_docs ($docs) {
+
+
+   function display_docs ($docs,$location) {
    	$options="";
     	foreach($docs as $doc) {
     		if($doc=="")
     		continue;
-$doc = trim ($doc);
-    		$options=$options."<option value='$doc'>$doc</option>";
+				$doc = trim ($doc);
+				if($doc == $_POST[$location])
+    		$options=$options."<option value='$doc' selected>$doc</option>";
+				else
+				$options=$options."<option value='$doc'>$doc</option>";
     	}
     	return $options;
    }
+
+	 function display_districts() {
+		 global $host;
+     	$csr = "<csd:requestParams xmlns:csd='urn:ihe:iti:csd:2013'>
+ 					 </csd:requestParams>";
+ 		$urn = "urn:openhie.org:openinfoman-tz:select_vims_district";
+ 		$districts=exec_request($_POST["src_doc_name"],$csr,$urn,$host);
+		$districts = json_decode($districts,true);
+		$displayed = array();
+		echo "Filter By Districts <select name='districts' id='chkveg' multiple='multiple'>";
+		foreach($districts["districts"] as $distr) {
+			$distr_name = $distr["name"];
+			if(in_array($distr["name"],$displayed))
+			continue;
+			echo "<option value='$distr_name' name='district'>".$distr_name."</option>";
+			$displayed[] = $distr["name"];
+		}
+	 }
 
    function exec_request($doc_name,$csr,$urn,$host) {
    	$curl_opts = array(

@@ -7,7 +7,7 @@ let $districts :=
     <districts type="array">
     {
       for $facility in  /CSD/facilityDirectory/facility
-      let $distr := lower-case(string(facility/extension))
+      let $distr := $facility/extension[@type='geographicZone']/text()
       return
 	if (true())
        then

@@ -570,11 +570,25 @@ foreach ($entity_match->source_entities[$src_doc_name] as $entity_id=>$entity) {
 		if(array_key_exists('dup',$rankings)) {
 			echo "<td>";
 			foreach($rankings['dup'] as $uuid=>$values){
+      if(count($values["vimsid"])>1)
+      echo "<b><font color='red'>";
       echo "<input type='hidden' value='$uuid' name='duplicate[$vimsid][$uuid]'>";
+      if(count($values["vimsid"])>1)
+      echo "<blink>";
 			echo $values["name"];
+      if(count($values["vimsid"])>1)
+      echo "</blink>";
       echo "<br>&nbsp;&nbsp;&nbsp;ID: ".$uuid;
       echo "<br>&nbsp;&nbsp;&nbsp;Hierarchy: ".$values["hierarchy"];
       echo "</br>";
+      if(count($values["vimsid"])>1) {
+        echo "Also Mapped to ";
+        foreach($values["vimsid"] as $vimsdupid) {
+          if($vimsid != $vimsdupid)
+          echo $vimsdupid;
+        }
+        echo "</font></b>";
+      }
       }
 			unset($rankings['dup']);
 			echo "</td>";

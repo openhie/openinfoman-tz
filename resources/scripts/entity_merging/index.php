@@ -12,6 +12,19 @@
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
 <script>
+function blink() {
+ var blinks = document.getElementsByTagName('blink');
+ for (var i = blinks.length - 1; i >= 0; i--) {
+ var s = blinks[i];
+ s.style.visibility = (s.style.visibility === 'visible') ? 'hidden' : 'visible';
+}
+window.setTimeout(blink, 500);
+}
+if (document.addEventListener) document.addEventListener("DOMContentLoaded", blink, false);
+else if (window.addEventListener) window.addEventListener("load", blink, false);
+else if (window.attachEvent) window.attachEvent("onload", blink);
+else window.onload = blink;
+
 $(function() {
 
     $('#chkveg').multiselect({

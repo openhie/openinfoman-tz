@@ -241,6 +241,8 @@ class entityMatchLevenshtein extends entityMatch {
           $district = (string)$extensions;
           if($extensions->attributes()->type == "facilityType")
           $facilityType = (string)$extensions;
+          if($extensions->attributes()->type == "active")
+          $active = (string)$extensions;
         }
 
         if(!in_array($district,$limit_districts))
@@ -254,6 +256,7 @@ class entityMatchLevenshtein extends entityMatch {
           $facDetails[$doc_name][$uuid]["code"] = $code;
           $facDetails[$doc_name][$uuid]["district"] = $district;
           $facDetails[$doc_name][$uuid]["facilityType"] = $facilityType;
+          $facDetails[$doc_name][$uuid]["active"] = $active;
         }
         else if($total_displayed>=$max_rows)
         break;
@@ -554,6 +557,7 @@ foreach ($entity_match->source_entities[$src_doc_name] as $entity_id=>$entity) {
   $vimsdistrict = $entity["district"];
   $vimsftype = $entity["facilityType"];
   $vimsname = $entity["name"];
+  $vimsactive = $entity["active"];
 	$rankings = $entity_match->find_matching_entities($entity_id,$vimsname,$vimsid);
   if(array_key_exists("dup",$rankings) and count($rankings["dup"])>1)
   echo "<tr bgcolor='	#EC7063'>";
@@ -563,6 +567,7 @@ foreach ($entity_match->source_entities[$src_doc_name] as $entity_id=>$entity) {
   echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;ID: $vimsid";
   echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;Code: $vimscode";
   echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;Type: $vimsftype";
+  echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;Active: $vimsactive";
   echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;District: $vimsdistrict";
   echo "</td>";
 	$count++;

@@ -1,4 +1,5 @@
 import module namespace util = "https://github.com/openhie/openinfoman-dhis/util";
+import module namespace csd_bl = "https://github.com/openhie/openinfoman/csd_bl";
 declare namespace csd = "urn:ihe:iti:csd:2013";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 declare variable $careServicesRequest as item() external;
@@ -21,18 +22,29 @@ let $name := $careServicesRequest/facility/name
 let $district := $careServicesRequest/facility/district
 let $gln := $careServicesRequest/facility/gln
 let $ftype := $careServicesRequest/facility/ftype
+let $active := if (string($careServicesRequest/facility/active) = "true")
+               then "Yes"
+               else if(string($careServicesRequest/facility/active) = "false")
+               then "No"
+               else ()
 let $urn := $uuid_generate(string($vimsid))
-let $org :=
+let $fac :=
 if (($name) and ($vimsid)  and ($urn) )
      then
        <csd:facility entityID='{$urn}'>
-	 <csd:otherID assigningAuthorityName='https://vims.moh.go.tz' code='id'>{string($vimsid)}</csd:otherID>
-   <csd:otherID assigningAuthorityName='https://vims.moh.go.tz' code='code'>{string($code)}</csd:otherID>
-   <csd:otherID assigningAuthorityName='https://vims.moh.go.tz' code='GLN'>{string($gln)}</csd:otherID>
-   <csd:extension type='geographicZone' urn='https://vims.moh.go.tz'>{string($district)}</csd:extension>
-   <csd:extension type='facilityType' urn='https://vims.moh.go.tz'>{string($ftype)}</csd:extension>
-	 <csd:primaryName>{string($name)}</csd:primaryName>
+      	 <csd:otherID assigningAuthorityName='https://vims.moh.go.tz' code='id'>{string($vimsid)}</csd:otherID>
+         <csd:otherID assigningAuthorityName='https://vims.moh.go.tz' code='code'>{string($code)}</csd:otherID>
+         <csd:otherID assigningAuthorityName='https://vims.moh.go.tz' code='GLN'>{
+           if(string($gln) = "undefined") then () else string($gln) }
+         </csd:otherID>
+         <csd:extension type='geographicZone' urn='https://vims.moh.go.tz'>{string($district)}</csd:extension>
+         <csd:extension type='facilityType' urn='https://vims.moh.go.tz'>{string($ftype)}</csd:extension>
+         <csd:extension type='active' urn='https://vims.moh.go.tz'>{$active}</csd:extension>
+      	 <csd:primaryName>{string($name)}</csd:primaryName>
        </csd:facility>
      else ()  (:no name or id or urn :)
-
-return insert node $org into /CSD/facilityDirectory
+let $existing := if (exists($fac/@entityID)) then csd_bl:filter_by_primary_id(/CSD/facilityDirectory/*,$fac) else ()
+return
+if (exists($existing))
+then replace node $existing with $fac
+else insert node $fac into /CSD/facilityDirectory

@@ -1,4 +1,5 @@
 import module namespace util = "https://github.com/openhie/openinfoman-dhis/util";
+import module namespace csd_bl = "https://github.com/openhie/openinfoman/csd_bl";
 declare namespace csd = "urn:ihe:iti:csd:2013";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 declare variable $careServicesRequest as item() external;
@@ -44,4 +45,8 @@ let $t1:= trace(/CSD/organizationDirectory,"Dir is ")
 let $t1:= trace(/,"Doc is ")
 let $t1:= trace($careServicesRequest,"CSR is ")
 
-return insert node $org into /CSD/organizationDirectory
+let $existing := if (exists($org/@entityID)) then csd_bl:filter_by_primary_id(/CSD/organizationDirectory/*,$org) else ()
+return
+if (exists($existing))
+then replace node $existing with $org
+else insert node $org into /CSD/organizationDirectory

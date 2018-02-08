@@ -33,7 +33,7 @@ if (($name) and ($vimsid)  and ($urn) )
      then
        <csd:facility entityID='{$urn}'>
       	 <csd:otherID assigningAuthorityName='https://vims.moh.go.tz' code='id'>{string($vimsid)}</csd:otherID>
-         <csd:otherID assigningAuthorityName='https://vims.moh.go.tz' code='code'>{string($code)}</csd:otherID>
+         <csd:otherID assigningAuthorityName='http://hfrportal.ehealth.go.tz' code='code'>{string($code)}</csd:otherID>
          <csd:otherID assigningAuthorityName='https://vims.moh.go.tz' code='GLN'>{
            if(string($gln) = "undefined") then () else string($gln) }
          </csd:otherID>

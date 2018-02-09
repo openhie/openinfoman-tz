@@ -1,3 +1,11 @@
+openinfoman-tz (1.2.11~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.11
+    -f436bb2 Minor changes
+    --https://github.com/openhie/openinfoman-tz/commmit/f436bb2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Fri, 09 Feb 2018 11:35:21 +0300
+
 openinfoman-tz (1.2.10~trusty) trusty; urgency=medium
 
   * Release Version 1.2.10

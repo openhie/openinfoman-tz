@@ -27,13 +27,40 @@ let $fac :=
 if (($name) and ($id)  and ($urn) )
      then
        <csd:facility entityID="{$urn}">
-	 <csd:otherID assigningAuthorityName='http://hfrportal.ehealth.go.tz' code='id'>{string($id)}</csd:otherID>
-   <csd:otherID assigningAuthorityName='http://hfrportal.ehealth.go.tz' code='Fac_IDNumber'>{string($code)}</csd:otherID>
-   <csd:extension type='facilityType' urn='urn:uuid:hfrportal:ehealth:go:tz'><facilityType>{string($type)}</facilityType></csd:extension>
-	 <csd:primaryName>{string($name)}</csd:primaryName>
-	 {$parent}
-   <csd:record created="{$time}" updated="{$time}" status="Active" sourceDirectory="http://hfrportal.ehealth.go.tz"/>
+				 <csd:otherID assigningAuthorityName='http://hfrportal.ehealth.go.tz' code='id'>{string($id)}</csd:otherID>
+			   <csd:otherID assigningAuthorityName='http://hfrportal.ehealth.go.tz' code='Fac_IDNumber'>{string($code)}</csd:otherID>
+			   <csd:extension type='facilityType' urn='urn:uuid:hfrportal:ehealth:go:tz'><facilityType>{string($type)}</facilityType></csd:extension>
+				 <csd:primaryName>{string($name)}</csd:primaryName>
+				 {$parent}
+			   <csd:record created="{$time}" updated="{$time}" status="Active" sourceDirectory="http://hfrportal.ehealth.go.tz"/>
        </csd:facility>
      else ()  (:no name or id or type :)
 
 return insert node $fac into /CSD/facilityDirectory
+
+let $existing := if (exists($fac/@entityID)) then csd_bl:filter_by_primary_id(/CSD/facilityDirectory/*,$fac) else ()
+return
+  if (exists($existing))
+  then (
+    if(exists($fac/extension[@type = "facilityType"]) and exists($existing/extension[@type = "facilityType"]) )
+    then (replace node $existing/extension[@type = "facilityType"] with $fac/extension[@type = "facilityType"])
+    else 
+      if(exists($fac/extension[@type = "facilityType"]))
+      then insert node $fac/extension[@type = "facilityType"] into $existing
+      else (),
+    if(exists($fac/primaryName) and exists($existing/primaryName) )
+    then (replace node $existing/primaryName with $fac/primaryName)
+    else 
+      if(exists($fac/primaryName))
+      then insert node $fac/primaryName into $existing
+      else (),
+
+    if(exists($fac/organizations) and exists($existing/organizations) )
+    then (replace node $existing/organizations with $fac/organizations)
+    else 
+      if(exists($fac/organizations))
+      then insert node $fac/organizations into $existing
+      else ()
+  )
+  else
+  insert node $fac into /CSD/facilityDirectory

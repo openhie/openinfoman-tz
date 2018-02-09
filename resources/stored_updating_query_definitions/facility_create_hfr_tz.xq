@@ -36,7 +36,4 @@ if (($name) and ($id)  and ($urn) )
        </csd:facility>
      else ()  (:no name or id or type :)
 
-
-let $t1:= trace($careServicesRequest,"CSR is ")
-
 return insert node $fac into /CSD/facilityDirectory

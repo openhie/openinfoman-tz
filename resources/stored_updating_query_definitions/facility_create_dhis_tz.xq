@@ -38,15 +38,6 @@ if (($name) and ($dhisid)  and ($urn) )
        </csd:facility>
      else ()  (:no name or id or type :)
 
-let $t0:= trace($fac,"Org is ")
-let $t0:= trace($dhisid/string(),"ID is ")
-let $t0:= trace($parent,"Parent is ")
-let $t1:= trace($urn,"URN IS")
-let $t1:= trace($name/string(),"Name IS")
-let $t1:= trace(/CSD/facilityDirectory,"Dir is ")
-let $t1:= trace(/,"Doc is ")
-let $t1:= trace($careServicesRequest,"CSR is ")
-
 let $existing := if (exists($fac/@entityID)) then csd_bl:filter_by_primary_id(/CSD/facilityDirectory/*,$fac) else ()
 return
 if (exists($existing))

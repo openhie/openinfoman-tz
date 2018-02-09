@@ -1,3 +1,55 @@
+openinfoman-tz (1.2.10~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.10
+    -c13a2f0 update a node when entityID is found
+    --https://github.com/openhie/openinfoman-tz/commmit/c13a2f0
+    -444b4b0 updating a node when entityID is found
+    --https://github.com/openhie/openinfoman-tz/commmit/444b4b0
+    -a5f2bda Displaying whether facility is active or not
+    --https://github.com/openhie/openinfoman-tz/commmit/a5f2bda
+    -569916a sending more data elements to openinfoman from VIMS
+    --https://github.com/openhie/openinfoman-tz/commmit/569916a
+    -a993db4 Red Highlights one facility mapped to multiple facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/a993db4
+    -0df6863 Fixed a bug
+    --https://github.com/openhie/openinfoman-tz/commmit/0df6863
+    -29dcc62 Adding caching mechanism into the entity matching tool. Ad
+    --https://github.com/openhie/openinfoman-tz/commmit/29dcc62
+    -2f5c4d4 Customizing stored function for TZ context
+    --https://github.com/openhie/openinfoman-tz/commmit/2f5c4d4
+    -770cb4c Adding a stored function to query VIMS geographicZones
+    --https://github.com/openhie/openinfoman-tz/commmit/770cb4c
+    -8d9d8f8 Adding paging of results
+    --https://github.com/openhie/openinfoman-tz/commmit/8d9d8f8
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Fri, 09 Feb 2018 11:33:19 +0300
+
+openinfoman-tz (1.2.10~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.10
+    -c13a2f0 update a node when entityID is found
+    --https://github.com/openhie/openinfoman-tz/commmit/c13a2f0
+    -444b4b0 updating a node when entityID is found
+    --https://github.com/openhie/openinfoman-tz/commmit/444b4b0
+    -a5f2bda Displaying whether facility is active or not
+    --https://github.com/openhie/openinfoman-tz/commmit/a5f2bda
+    -569916a sending more data elements to openinfoman from VIMS
+    --https://github.com/openhie/openinfoman-tz/commmit/569916a
+    -a993db4 Red Highlights one facility mapped to multiple facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/a993db4
+    -0df6863 Fixed a bug
+    --https://github.com/openhie/openinfoman-tz/commmit/0df6863
+    -29dcc62 Adding caching mechanism into the entity matching tool. Ad
+    --https://github.com/openhie/openinfoman-tz/commmit/29dcc62
+    -2f5c4d4 Customizing stored function for TZ context
+    --https://github.com/openhie/openinfoman-tz/commmit/2f5c4d4
+    -770cb4c Adding a stored function to query VIMS geographicZones
+    --https://github.com/openhie/openinfoman-tz/commmit/770cb4c
+    -8d9d8f8 Adding paging of results
+    --https://github.com/openhie/openinfoman-tz/commmit/8d9d8f8
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Fri, 09 Feb 2018 11:33:09 +0300
+
 openinfoman-tz (1.2.9~trusty) trusty; urgency=medium
 
   * Release Version 1.2.9

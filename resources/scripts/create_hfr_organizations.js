@@ -26,7 +26,7 @@ var server = http.createServer(function(req, res) {
 
 server.listen(8888);
 
-  var url = "http://resourcemap.instedd.org/en/collections/409/fields/13274"
+  var url = "http://resourcemap.instedd.org/en/collections/409/fields/1629"
   var username = ""
   var password = ""
   var orgs = []
@@ -37,6 +37,15 @@ server.listen(8888);
       Authorization: auth
     }
   }
+
+  request.get(options, (err, res, body) => {
+    if (err) {
+      return callback(err)
+    }
+    var body = JSON.parse(body)
+    var orgs = extract_orgs(body.config.hierarchy,"Top")
+    create_orgs(orgs)
+  })
 
   function get_parent_details(orgs,parent_id) {
     return orgs.find(org => {
@@ -96,12 +105,3 @@ server.listen(8888);
 
     })
   }
-
-  request.get(options, (err, res, body) => {
-    if (err) {
-      return callback(err)
-    }
-    var body = JSON.parse(body)
-    var orgs = extract_orgs(body.config.hierarchy,"Top")
-    create_orgs(orgs)
-  })

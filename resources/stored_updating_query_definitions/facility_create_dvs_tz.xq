@@ -33,4 +33,23 @@ if (($name) and ($id)  and ($urn) )
        </csd:facility>
      else ()  (:no name or id or type :)
 
-return insert node $fac into /CSD/facilityDirectory
+let $existing := if (exists($fac/@entityID)) then csd_bl:filter_by_primary_id(/CSD/facilityDirectory/*,$fac) else ()
+return
+  if (exists($existing))
+  then (
+    if(exists($fac/primaryName) and exists($existing/primaryName) )
+    then (replace node $existing/primaryName with $fac/primaryName)
+    else 
+      if(exists($fac/primaryName))
+      then insert node $fac/primaryName into $existing
+      else (),
+
+    if(exists($fac/organizations) and exists($existing/organizations) )
+    then (replace node $existing/organizations with $fac/organizations)
+    else 
+      if(exists($fac/organizations))
+      then insert node $fac/organizations into $existing
+      else ()
+  )
+  else
+  insert node $fac into /CSD/facilityDirectory

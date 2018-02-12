@@ -41,8 +41,15 @@ if (($name) and ($level)  and ($urn) )
        </csd:organization>
      else ()  (:no name or id or type :)
 
+(: 
+  check if openinfoman has another HFR organization with this ID and do nothing if one is found
+:)
+let $existing_otherid := if (exists($org/otherID)) then csd_bl:filter_by_other_id(/CSD/organizationDirectory/*,$org/otherID) else ()
 let $existing := if (exists($org/@entityID)) then csd_bl:filter_by_primary_id(/CSD/organizationDirectory/*,$org) else ()
 return
-if (exists($existing))
-then replace node $existing with $org
-else insert node $org into /CSD/organizationDirectory
+if (exists($existing_otherid))
+then ()
+else
+  if (exists($existing))
+  then replace node $existing with $org
+  else insert node $org into /CSD/organizationDirectory

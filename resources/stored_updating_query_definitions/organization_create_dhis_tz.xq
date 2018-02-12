@@ -17,6 +17,7 @@ let $uuid_generate := function($name) {
 }
 
 let $dhisid := $careServicesRequest/organization/@id
+let $type := $careServicesRequest/organization/type
 let $pid := $careServicesRequest/organization/parent/@id
 let $urn := $uuid_generate($dhisid)
 let $parent :=
@@ -30,9 +31,10 @@ let $org :=
 if (($name) and ($dhisid)  and ($urn) )
      then
        <csd:organization entityID="{$urn}">
-	 <csd:otherID assigningAuthorityName='tanzania-hmis' code='id'>{string($dhisid)}</csd:otherID>
-	 <csd:primaryName>{string($name)}</csd:primaryName>
-	 {$parent}
+      	 <csd:otherID assigningAuthorityName='tanzania-hmis' code='id'>{string($dhisid)}</csd:otherID>
+         <csd:extension type='orgType' urn='urn:moh:tanzania-hmis:csd:2018'>{string($type)}</csd:extension>
+      	 <csd:primaryName>{string($name)}</csd:primaryName>
+      	 {$parent}
        </csd:organization>
      else ()  (:no name or id or type :)
 

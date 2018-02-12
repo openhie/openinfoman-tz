@@ -65,18 +65,18 @@ server.listen(8888);
                           <csd:type>${fac_type}</csd:type>
                         </csd:facility>
                        </csd:requestParams>`
-         var options = {
-           url: url.toString(),
-           headers: {
-             'Content-Type': 'text/xml'
-           },
-           body: csd_msg
-         }
-         request.post(options, (err, res, body) => {
-           winston.error(name)
-           if(body)
-           logger.error(body)
-         })
+        var options = {
+          url: url.toString(),
+          headers: {
+           'Content-Type': 'text/xml'
+          },
+          body: csd_msg
+        }
+        request.post(options, (err, res, body) => {
+          winston.error(name)
+          if(body)
+          logger.error(body)
+        })
       })
     })
   }

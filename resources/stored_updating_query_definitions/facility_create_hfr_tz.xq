@@ -1,4 +1,5 @@
 import module namespace util = "https://github.com/openhie/openinfoman-dhis/util";
+import module namespace csd_bl = "https://github.com/openhie/openinfoman/csd_bl";
 declare namespace csd = "urn:ihe:iti:csd:2013";
 declare default element  namespace   "urn:ihe:iti:csd:2013";
 declare variable $careServicesRequest as item() external;
@@ -35,8 +36,6 @@ if (($name) and ($id)  and ($urn) )
 			   <csd:record created="{$time}" updated="{$time}" status="Active" sourceDirectory="http://hfrportal.ehealth.go.tz"/>
        </csd:facility>
      else ()  (:no name or id or type :)
-
-return insert node $fac into /CSD/facilityDirectory
 
 let $existing := if (exists($fac/@entityID)) then csd_bl:filter_by_primary_id(/CSD/facilityDirectory/*,$fac) else ()
 return

@@ -1,0 +1,300 @@
+openinfoman-tz (1.2.11~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.11
+    -f436bb2 Minor changes
+    --https://github.com/openhie/openinfoman-tz/commmit/f436bb2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Fri, 09 Feb 2018 11:35:21 +0300
+
+openinfoman-tz (1.2.10~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.10
+    -c13a2f0 update a node when entityID is found
+    --https://github.com/openhie/openinfoman-tz/commmit/c13a2f0
+    -444b4b0 updating a node when entityID is found
+    --https://github.com/openhie/openinfoman-tz/commmit/444b4b0
+    -a5f2bda Displaying whether facility is active or not
+    --https://github.com/openhie/openinfoman-tz/commmit/a5f2bda
+    -569916a sending more data elements to openinfoman from VIMS
+    --https://github.com/openhie/openinfoman-tz/commmit/569916a
+    -a993db4 Red Highlights one facility mapped to multiple facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/a993db4
+    -0df6863 Fixed a bug
+    --https://github.com/openhie/openinfoman-tz/commmit/0df6863
+    -29dcc62 Adding caching mechanism into the entity matching tool. Ad
+    --https://github.com/openhie/openinfoman-tz/commmit/29dcc62
+    -2f5c4d4 Customizing stored function for TZ context
+    --https://github.com/openhie/openinfoman-tz/commmit/2f5c4d4
+    -770cb4c Adding a stored function to query VIMS geographicZones
+    --https://github.com/openhie/openinfoman-tz/commmit/770cb4c
+    -8d9d8f8 Adding paging of results
+    --https://github.com/openhie/openinfoman-tz/commmit/8d9d8f8
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Fri, 09 Feb 2018 11:33:19 +0300
+
+openinfoman-tz (1.2.10~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.10
+    -c13a2f0 update a node when entityID is found
+    --https://github.com/openhie/openinfoman-tz/commmit/c13a2f0
+    -444b4b0 updating a node when entityID is found
+    --https://github.com/openhie/openinfoman-tz/commmit/444b4b0
+    -a5f2bda Displaying whether facility is active or not
+    --https://github.com/openhie/openinfoman-tz/commmit/a5f2bda
+    -569916a sending more data elements to openinfoman from VIMS
+    --https://github.com/openhie/openinfoman-tz/commmit/569916a
+    -a993db4 Red Highlights one facility mapped to multiple facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/a993db4
+    -0df6863 Fixed a bug
+    --https://github.com/openhie/openinfoman-tz/commmit/0df6863
+    -29dcc62 Adding caching mechanism into the entity matching tool. Ad
+    --https://github.com/openhie/openinfoman-tz/commmit/29dcc62
+    -2f5c4d4 Customizing stored function for TZ context
+    --https://github.com/openhie/openinfoman-tz/commmit/2f5c4d4
+    -770cb4c Adding a stored function to query VIMS geographicZones
+    --https://github.com/openhie/openinfoman-tz/commmit/770cb4c
+    -8d9d8f8 Adding paging of results
+    --https://github.com/openhie/openinfoman-tz/commmit/8d9d8f8
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Fri, 09 Feb 2018 11:33:09 +0300
+
+openinfoman-tz (1.2.9~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.9
+    -bcb7951 Adding link to entity merging,Adding stored functions to u
+    --https://github.com/openhie/openinfoman-tz/commmit/bcb7951
+    -14fe70d Adding Facility Mathing Tool
+    --https://github.com/openhie/openinfoman-tz/commmit/14fe70d
+    -c5d48e9 Adding record status
+    --https://github.com/openhie/openinfoman-tz/commmit/c5d48e9
+    -4b807e3 Displaying fac_type in extension
+    --https://github.com/openhie/openinfoman-tz/commmit/4b807e3
+    -200b873 fixing standard issu
+    --https://github.com/openhie/openinfoman-tz/commmit/200b873
+    -a26b7ef replacing php script with nodejs script to increase perfor
+    --https://github.com/openhie/openinfoman-tz/commmit/a26b7ef
+    -289fb08 Adding stored function to create HFR facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/289fb08
+    -02b5040 Minor changes
+    --https://github.com/openhie/openinfoman-tz/commmit/02b5040
+    -04e639b Adding script to fetch HFR orgs
+    --https://github.com/openhie/openinfoman-tz/commmit/04e639b
+    -6c67172 Changing urn
+    --https://github.com/openhie/openinfoman-tz/commmit/6c67172
+    -e3db0a1 Adding stored function to create organization hierarchy fr
+    --https://github.com/openhie/openinfoman-tz/commmit/e3db0a1
+    -5c392a1 Adding scripts to fetch and add VIMS and DHIS2 facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/5c392a1
+    -1d4b7c2 Adding script to merge VIMS and DHIS2 facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/1d4b7c2
+    -83ed2c3 Extra modifications for VIMS
+    --https://github.com/openhie/openinfoman-tz/commmit/83ed2c3
+    -3291389 Creating facilities from VIMS
+    --https://github.com/openhie/openinfoman-tz/commmit/3291389
+    -1aa924d creating facility from DHIS2 and HFR
+    --https://github.com/openhie/openinfoman-tz/commmit/1aa924d
+    -d51fd75 Creating orgs
+    --https://github.com/openhie/openinfoman-tz/commmit/d51fd75
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 16 Aug 2017 11:00:54 +0300
+
+openinfoman-tz (1.2.8~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.8
+    -c8a3217 Adding hfr stored function to debian package
+    --https://github.com/openhie/openinfoman-tz/commmit/c8a3217
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Tue, 06 Dec 2016 18:00:49 +0300
+
+openinfoman-tz (1.2.8~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.8
+    -c8a3217 Adding hfr stored function to debian package
+    --https://github.com/openhie/openinfoman-tz/commmit/c8a3217
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Tue, 06 Dec 2016 18:00:39 +0300
+
+openinfoman-tz (1.2.7~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.7
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Tue, 06 Dec 2016 15:33:35 +0300
+
+openinfoman-tz (1.2.6~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.6
+    -6342bd2 Fixing bug on number of parameters
+    --https://github.com/openhie/openinfoman-tz/commmit/6342bd2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Tue, 06 Dec 2016 15:32:41 +0300
+
+openinfoman-tz (1.2.6~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.6
+    -6342bd2 Fixing bug on number of parameters
+    --https://github.com/openhie/openinfoman-tz/commmit/6342bd2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Tue, 06 Dec 2016 15:32:30 +0300
+
+openinfoman-tz (1.2.5~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.5
+    -a7a0a7b Exit from org hierarchy when village is selected
+    --https://github.com/openhie/openinfoman-tz/commmit/a7a0a7b
+    -0905a1e Submiting one sequence that has multiple parameters
+    --https://github.com/openhie/openinfoman-tz/commmit/0905a1e
+    -cbe7f23 Adding updated hfr_facilities_to_csd.xq
+    --https://github.com/openhie/openinfoman-tz/commmit/cbe7f23
+    -589e281 Removed hfr_facilities_to_csd.xq
+    --https://github.com/openhie/openinfoman-tz/commmit/589e281
+    -9312138 Added a stored function to query hfr facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/9312138
+    -03265b2 Adding stored function to convert hfr facility data into C
+    --https://github.com/openhie/openinfoman-tz/commmit/03265b2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 06 Aug 2016 21:51:23 +0300
+
+openinfoman-tz (1.2.4~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.4
+    -071560a fixup csd_webconf references
+    --http://github.com/openhie/openinfoman-tz/commmit/071560a
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 28 Mar 2016 02:04:31 +0000
+
+openinfoman-tz (1.2.3~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.3
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 20 Mar 2016 20:03:47 +0000
+
+openinfoman-tz (1.2.2~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.2
+    -89ad883 remove csd_webconf:db reference
+    --http://github.com/openhie/openinfoman-tz/commmit/89ad883
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 20 Mar 2016 20:03:36 +0000
+
+openinfoman-tz (1.2.1~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.1
+    -4222021 "Release Version 1.1.1"
+    --http://github.com/openhie/openinfoman-tz/commmit/4222021
+    -371fbec Minor Change
+    --http://github.com/openhie/openinfoman-tz/commmit/371fbec
+    -2b16ace Added Rapidpro Workflows
+    --http://github.com/openhie/openinfoman-tz/commmit/2b16ace
+    -1094e4d Added kannel config,made changes on the birth registration
+    --http://github.com/openhie/openinfoman-tz/commmit/1094e4d
+    -01eea74 "Release Version 1.0.10"
+    --http://github.com/openhie/openinfoman-tz/commmit/01eea74
+    -a6a41a3 webui API updates
+    --http://github.com/openhie/openinfoman-tz/commmit/a6a41a3
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 20 Mar 2016 18:40:47 +0000
+
+openinfoman-tz (1.1.1~trusty) trusty; urgency=medium
+
+  * Release Version 1.1.1
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 05 Mar 2016 10:58:22 +0000
+
+openinfoman-tz (1.0.10~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.10
+    -a6a41a3 webui API updates
+    --http://github.com/openhie/openinfoman-tz/commmit/a6a41a3
+    -a151419 updated birth registration worklow to display response dat
+    --http://github.com/openhie/openinfoman-tz/commmit/a151419
+    -24a1e61 newbirth registration - json response with success/fail
+    --http://github.com/openhie/openinfoman-tz/commmit/24a1e61
+    -ec2c135 pix new baby-fixed name and identifier
+    --http://github.com/openhie/openinfoman-tz/commmit/ec2c135
+    -a8220ae updated birth registration flow export
+    --http://github.com/openhie/openinfoman-tz/commmit/a8220ae
+    -0b129be new birth registration is working
+    --http://github.com/openhie/openinfoman-tz/commmit/0b129be
+    -d353888 removed debug
+    --http://github.com/openhie/openinfoman-tz/commmit/d353888
+    -a7d5196 changed echo to error_log()
+    --http://github.com/openhie/openinfoman-tz/commmit/a7d5196
+    -fdfa26a updated ignore
+    --http://github.com/openhie/openinfoman-tz/commmit/fdfa26a
+    -bc90dba submit new birth registration
+    --http://github.com/openhie/openinfoman-tz/commmit/bc90dba
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 18 Jan 2016 22:46:07 -0500
+
+openinfoman-tz (1.0.9~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.9
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 11 Mar 2015 19:18:52 +0000
+
+openinfoman-tz (1.0.8~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.8
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 11 Mar 2015 18:58:14 +0000
+
+openinfoman-tz (1.0.7~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.7
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 11 Mar 2015 18:54:23 +0000
+
+openinfoman-tz (1.0.6~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.6
+    -4fed624 Merge branch 'master' of https://github.com/openhie/openin
+    --https://github.com/openhie/openinfoman-tz/commmit/4fed624
+    -9d0be19 Update README.md
+    --https://github.com/openhie/openinfoman-tz/commmit/9d0be19
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 11 Mar 2015 18:45:42 +0000
+
+openinfoman-tz (1.0.5~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.5
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 11 Mar 2015 18:43:40 +0000
+
+openinfoman-tz (1.0.4~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.4
+    -87b895c Merge pull request #3 from allyshaban5/master
+    --https://github.com/openhie/openinfoman-tz/commmit/87b895c
+    -c9fc5e7 Update select-village.json
+    --https://github.com/openhie/openinfoman-tz/commmit/c9fc5e7
+    -729a369 Added stored functions for selecting villages. Added workf
+    --https://github.com/openhie/openinfoman-tz/commmit/729a369
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 11 Mar 2015 18:19:38 +0000
+
+openinfoman-tz (1.0.3~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.3
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 11 Mar 2015 13:45:52 +0000
+
+openinfoman-tz (1.0.2~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.2
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 11 Mar 2015 13:42:17 +0000
+
+openinfoman-tz (1.0.1~trusty) trusty; urgency=medium
+
+  * Release Version 1.0.1
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 11 Mar 2015 13:41:49 +0000
+
+openinfoman-tz (1.0.0~trusty) trusty; urgency=low
+
+  [Carl Leitner <litlfred@ibiblio.org>]
+  * Initial Build
+    Fri 2015-02-13 13:55:10 -0500
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 16 February 2015 13:55:10 -0500
+

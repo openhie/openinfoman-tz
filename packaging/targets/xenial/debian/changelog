@@ -1,3 +1,21 @@
+openinfoman-tz (1.2.12~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.12
+    -d774315 Packaging for Ubuntu 16.04
+    --https://github.com/openhie/openinfoman-tz/commmit/d774315
+    -00019f8 Fixed a bug
+    --https://github.com/openhie/openinfoman-tz/commmit/00019f8
+    -bd8ad7d Adding scripts to map DHIS2 against HFR facilities
+    --https://github.com/openhie/openinfoman-tz/commmit/bd8ad7d
+    -9cbed5c Adding stored function to select districts in dhis2 doc
+    --https://github.com/openhie/openinfoman-tz/commmit/9cbed5c
+    -ec0d957 Include org type under organization
+    --https://github.com/openhie/openinfoman-tz/commmit/ec0d957
+    -8a81139 update name,ftype and parent when entityID found
+    --https://github.com/openhie/openinfoman-tz/commmit/8a81139
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Mon, 05 Mar 2018 20:47:19 +0300
+
 openinfoman-tz (1.2.11~trusty) trusty; urgency=medium
 
   * Release Version 1.2.11

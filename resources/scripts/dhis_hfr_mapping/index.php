@@ -1,14 +1,8 @@
 <html>
 <head>
-<link href="http://localhost:8984/static/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="http://localhost:8984/static/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
-<link rel="shortcut icon" href="http://localhost:8984/static/favicon.ico">
-<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:8984/static/bootstrap/js/tab.js">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="shortcut icon" href="static/favicon.ico">
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<link rel="stylesheet" href="css/bootstrap-3.1.1.min.css" type="text/css" />
-<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css" />
-
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
 <script>
@@ -134,7 +128,7 @@ function show(id,level_message) {
 <body>
 <div class="navbar navbar-inverse navbar-static-top">
       <div class="container">
-        <img class="pull-left" height="38px" style="margin-top:8px; margin-right:5px" src="http://localhost:8984/static/oim_logo_48p.png">
+        <img class="pull-left" height="38px" style="margin-top:8px; margin-right:5px" src="static/oim_logo_48p.png">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="icon-bar"></span>
@@ -144,7 +138,7 @@ function show(id,level_message) {
           <table>
             <tbody><tr>
               <td>
-                <a class="navbar-brand" href="http://localhost:8984/CSD">OpenInfoMan - InterLinked Health Services Registry</a>
+                <a class="navbar-brand" href="#">OpenInfoMan - DHIS2-HFR Mapping</a>
               </td>
             </tr>
             <tr>
@@ -157,7 +151,7 @@ function show(id,level_message) {
           </tbody></table>
         </div>
         <span class="pull-right">
-          <img src="http://localhost:8984/static/openhie.png" style="height:60px; padding-right:10px; padding-top:8px;">
+          <img src="static/openhie.png" style="height:60px; padding-right:10px; padding-top:8px;">
         </span>
       </div>
     </div>
@@ -274,7 +268,7 @@ display_districts();
 </div>
 <div class="footer">
       <center>
-        <img src="http://localhost:8984/static/USAID_CP_IH_PEPFAR_logos.png" width="30%">
+        <img src="static/USAID_CP_IH_PEPFAR_logos.png" width="30%">
       </center>
       <div class="container">
         <div class="row">

@@ -1,13 +1,13 @@
 <?php
 set_time_limit(0);
-ini_set('memory_limit', '2000M');
+ini_set('memory_limit', '20000M');
 abstract class entityMatch {
     protected $host;
     protected $src_doc_name;
     protected $target_doc_name;
     protected $entity_type;
 
-    public abstract function find_matching_entities($entity_id,$entity_name,$vimsid);
+    public abstract function find_matching_entities($entity_id,$entity_name,$vimsid,$vimscode);
     function __construct($host,$target_doc_name,$src_doc_name,$entity_type) {
         $this->host = $host;
         $this->target_doc_name = $target_doc_name;
@@ -198,7 +198,7 @@ abstract class entityMatch {
 
 
 class entityMatchPotentialDuplicates extends entityMatch {
-    public function find_matching_entities($entity_id,$entity_name,$vimsid) {
+    public function find_matching_entities($entity_id,$entity_name,$vimsid,$vimscode) {
         $rankings =array(0=>$this->get_potential_duplicates($entity_id)); //flat rankings - no preference in these
         return $rankings;
     }
@@ -284,15 +284,20 @@ class entityMatchLevenshtein extends entityMatch {
           $parents[] = (string)$organization->attributes()->entityID;
         }
         $vimsid = false;
+        $hfrcode = false;
         foreach($facility->otherID as $otherID) {
           if($otherID->attributes()->assigningAuthorityName == "https://vims.moh.go.tz" and $otherID->attributes()->code == "id")
             $vimsid[] = (string)$otherID;
+          if($otherID->attributes()->assigningAuthorityName == "http://hfrportal.ehealth.go.tz" and $otherID->attributes()->code == "Fac_IDNumber")
+            $hfrcode[] = (string)$otherID;
         }
         $facDetails[$doc_name][$uuid]["name"] = $name;
         $facDetails[$doc_name][$uuid]["parents"] = $parents;
         $facDetails[$doc_name][$uuid]["uuid"] = $uuid;
         if($vimsid)
         $facDetails[$doc_name][$uuid]["vimsid"] = $vimsid;
+        if($hfrcode)
+        $facDetails[$doc_name][$uuid]["hfrcode"] = $hfrcode;
       }
       $cachekey = "hfr_facilities" . md5($doc_name);
       $cacheresult = $this->cache_get($cachekey);
@@ -342,7 +347,7 @@ class entityMatchLevenshtein extends entityMatch {
       }
     }
 
-    public function find_matching_entities($src_entity_id,$src_entity_name,$vimsid) {
+    public function find_matching_entities($src_entity_id,$src_entity_name,$vimsid,$vimscode) {
       $strs=explode(" ",$src_entity_name);
 		 foreach($strs as $k=>$str)
 			if($str=="")
@@ -380,7 +385,7 @@ class entityMatchLevenshtein extends entityMatch {
 
         if($dup_found)
         continue;
-       	$strs=explode(" ",$target_entity["name"]);
+      $strs=explode(" ",$target_entity["name"]);
 			foreach($strs as $k=>$str)
 			if($str=="")
 			unset($strs[$k]);
@@ -404,11 +409,15 @@ class entityMatchLevenshtein extends entityMatch {
 			else
 			$lev = levenshtein(trim(strtolower($src_entity_name)), trim(strtolower($target_entity_name)));
 
+      if(array_key_exists("hfrcode",$target_entity) and in_array($vimscode,$target_entity["hfrcode"])) {
+        $lev=0;
+      }
+
 			if(count($rankings)==0) {
 			     $rankings[$lev][$target_entity_id]=$target_entity;
       }
 			else {
-				if(array_key_exists($lev,$rankings) or count($rankings)<5) {
+				if(array_key_exists($lev,$rankings) or count($rankings)<2) {
 					$rankings[$lev][$target_entity_id]=$target_entity;
 				}
 				else {
@@ -441,6 +450,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
                 </csd:requestParams>";
           $urn = "urn:openhie.org:openinfoman-hwr:stored-function:facility_delete_otherid_by_code";
     			$entities = $entity_match->exec_request($_POST["target_doc_name"],$csr,$urn);
+
+          
         }
       }
 		}
@@ -558,7 +569,7 @@ foreach ($entity_match->source_entities[$src_doc_name] as $entity_id=>$entity) {
   $vimsftype = $entity["facilityType"];
   $vimsname = $entity["name"];
   $vimsactive = $entity["active"];
-	$rankings = $entity_match->find_matching_entities($entity_id,$vimsname,$vimsid);
+	$rankings = $entity_match->find_matching_entities($entity_id,$vimsname,$vimsid,$vimscode);
   if(array_key_exists("dup",$rankings) and count($rankings["dup"])>1)
   echo "<tr bgcolor='	#EC7063'>";
   else
@@ -584,15 +595,22 @@ foreach ($entity_match->source_entities[$src_doc_name] as $entity_id=>$entity) {
       if(count($values["vimsid"])>1)
       echo "</blink>";
       echo "<br>&nbsp;&nbsp;&nbsp;ID: ".$uuid;
+      foreach($values["hfrcode"] as $hfrcode)
+      echo "<br>&nbsp;&nbsp;&nbsp;CODE: ".$hfrcode;
       echo "<br>&nbsp;&nbsp;&nbsp;Hierarchy: ".$values["hierarchy"];
       echo "</br>";
       if(count($values["vimsid"])>1) {
         echo "Also Mapped to ";
+        $displayed = 0;
         foreach($values["vimsid"] as $vimsdupid) {
-          if($vimsid != $vimsdupid)
-          echo $vimsdupid;
+          if($vimsid != $vimsdupid){
+            $displayed++;
+            if($displayed>1)
+            echo ",";
+            echo $vimsdupid;
+          }
         }
-        echo "</font></b>";
+        echo "</font></b><br><br>";
       }
       }
 			unset($rankings['dup']);
@@ -609,6 +627,9 @@ foreach ($entity_match->source_entities[$src_doc_name] as $entity_id=>$entity) {
    		foreach($rankings_pull as $id=>$close) {
    			echo "<input type='radio' onclick='clear_search($vimsid)' name='target[$vimsid]' value='$id'>".$close["name"];
         echo "<br>&nbsp;&nbsp;ID: ".$close["uuid"];
+        foreach($close["hfrcode"] as $hfrcode) {
+          echo "<br>&nbsp;&nbsp;CODE: ".$hfrcode;
+        }
         echo "<br>&nbsp;&nbsp;Hierarchy: ".$close["hierarchy"];
         echo "<br>";
    		}

@@ -248,8 +248,10 @@ class entityMatchLevenshtein extends entityMatch {
         if(!in_array($district,$limit_districts))
         continue;
 
+        else if($max_rows != -1 && $total_displayed>=$max_rows)
+        break;
         $counter++;
-        if($counter>=$first_row && $total_displayed<$max_rows) {
+        if($counter>=$first_row) {
           $total_displayed++;
           $facDetails[$doc_name][$uuid]["name"] = $name;
           $facDetails[$doc_name][$uuid]["id"] = $id;
@@ -258,10 +260,6 @@ class entityMatchLevenshtein extends entityMatch {
           $facDetails[$doc_name][$uuid]["facilityType"] = $facilityType;
           $facDetails[$doc_name][$uuid]["active"] = $active;
         }
-        else if($total_displayed>=$max_rows)
-        break;
-        else
-        continue;
       }
       return $facDetails;
     }
@@ -286,16 +284,19 @@ class entityMatchLevenshtein extends entityMatch {
         $vimsid = false;
         $hfrcode = false;
         foreach($facility->otherID as $otherID) {
-          if($otherID->attributes()->assigningAuthorityName == "https://vims.moh.go.tz" and $otherID->attributes()->code == "id")
+          if($otherID->attributes()->assigningAuthorityName == "https://vims.moh.go.tz" and $otherID->attributes()->code == "id"){
             $vimsid[] = (string)$otherID;
+            $this->mapped_facilities[(string)$otherID] = (string)$otherID;
+          }
           if($otherID->attributes()->assigningAuthorityName == "http://hfrportal.ehealth.go.tz" and $otherID->attributes()->code == "Fac_IDNumber")
             $hfrcode[] = (string)$otherID;
         }
         $facDetails[$doc_name][$uuid]["name"] = $name;
         $facDetails[$doc_name][$uuid]["parents"] = $parents;
         $facDetails[$doc_name][$uuid]["uuid"] = $uuid;
-        if($vimsid)
-        $facDetails[$doc_name][$uuid]["vimsid"] = $vimsid;
+        if($vimsid){
+          $facDetails[$doc_name][$uuid]["vimsid"] = $vimsid;
+        }
         if($hfrcode)
         $facDetails[$doc_name][$uuid]["hfrcode"] = $hfrcode;
       }
@@ -345,6 +346,16 @@ class entityMatchLevenshtein extends entityMatch {
       else {
         return $this->hierarchy;
       }
+    }
+
+    public function mapped_fac_per_selected_distr($mapped_facilities,$facilities){
+      $mapped = 0;
+      foreach($facilities[$this->src_doc_name] as $facility){
+        if(in_array($facility["id"],$mapped_facilities)) {
+          $mapped++;
+        }
+      }
+      return $mapped;
     }
 
     public function find_matching_entities($src_entity_id,$src_entity_name,$vimsid,$vimscode) {
@@ -514,26 +525,75 @@ else
 $page=0;
 $count=0;
 }
-$first_row=$page*$max_rows;
+$first_row=$page*$max_rows+1;
+
+$facilities = $entity_match->cache_vims_facilities($districts,$src_doc_name,0,-1);
+$total_rows = count($facilities[$src_doc_name]);
+if($max_rows > $total_rows or $max_rows=="all")
+$max_rows=$total_rows;
+
+$total_page=ceil($total_rows/$max_rows)-1;
+$entity_match->source_entities = $entity_match->cache_vims_facilities($districts,$src_doc_name,$first_row,$max_rows);
+$entity_match->target_entities = $entity_match->cache_hfr_facilities($target_doc_name);
+$entity_match->target_orgs_entities = $entity_match->cache_hfr_orgs($target_doc_name);
+
+
 $csr = "
 <csd:requestParams xmlns:csd='urn:ihe:iti:csd:2013'>
 <adhoc>declare namespace csd = 'urn:ihe:iti:csd:2013';count(/csd:CSD/csd:{$entity_type}Directory/*)</adhoc>
 </csd:requestParams>";
 $urn = "urn:ihe:iti:csd:2014:adhoc";
-$total_rows = $entity_match->exec_request($src_doc_name,$csr,$urn);
-if($max_rows > $total_rows or $max_rows=="all")
-$max_rows=$total_rows;
 
-$total_page=ceil($total_rows/$max_rows)-1;
+$total_vims_facilities = $entity_match->exec_request($src_doc_name,$csr,$urn);
+$total_mapped_facilities = count($entity_match->mapped_facilities);
+$total_vims_facilities_per_district = count($facilities[$src_doc_name]);
+$total_fac_mapped_per_distr = $entity_match->mapped_fac_per_selected_distr($entity_match->mapped_facilities,$facilities);
+$total_percent_mapped_all = $total_mapped_facilities/$total_vims_facilities*100;
+$total_percent_mapped = round( $total_percent_mapped_all, 1, PHP_ROUND_HALF_UP);
+//$total_percent_mapped_all .= '%';
+
+$total_percent_mapped_distr = $total_fac_mapped_per_distr/$total_vims_facilities_per_district*100;
+$total_percent_mapped_distr = round( $total_percent_mapped_distr, 1, PHP_ROUND_HALF_UP);
+//$total_percent_mapped_distr .= '%';
+
+
 //end of controlling page display
 echo "<form method='POST' action='merge_entities_JSP.php'>";
 echo "<input type='hidden' name='target_doc_name' value='$target_doc_name'>";
 echo "<input type='hidden' name='src_doc_name' value='$src_doc_name'>";
 echo "<input type='hidden' name='host' value='$host'>";
 echo "<input type='hidden' name='entity_type' value='$entity_type'>";
-echo "<center><u><b><font color='green'>Page Number ".($page+1)."/".($total_page+1)."</font><font color='orange'> Showing ".$max_rows."/".$total_rows." Records</b><p></u>";
+echo "<div class='row alert alert-success' role='alert'>";
+echo "<table style='width:100%'><tr>";
+echo "<td style='width:35%'>
+<table width='100%'><tr>
+<td style='width:45%;font-size:13;color:green' valign='top' align='center'>Mapping Status - Selected Districts</td>
+<td style='width:55%' valign='top'>
+<div class='progress' style='width:100%;background-color:red'>
+  <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='$total_percent_mapped_distr' aria-valuemin='0' aria-valuemax='100' style='width: $total_percent_mapped_distr%'>$total_percent_mapped_distr%</div>
+</div>
+</td>
+</tr></table>
+</td>";
+
+echo "<td style='width:30%' valign='top' align='center'>
+<div class='col'><center><b><font color='green'>Page Number <span class='badge'>".($page+1)." of ".($total_page+1)."</span></font> | <font color='orange'> Showing <span class='badge'>".$first_row."-".($first_row+count($entity_match->source_entities[$src_doc_name])-1)." of ".$total_rows."</span> Records</b></center></td>
+<td style='width:35%' valign='top' align='right'>
+<table width='100%'><tr>
+<td style='width:45%;font-size:13;color:green' valign='top' align='center'>Mapping Status - All Facilities</td>
+<td style='width:55%' valign='top'>
+<div class='progress' style='width:100%;background-color:red'>
+  <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='$total_percent_mapped' aria-valuemin='0' aria-valuemax='100' style='width: $total_percent_mapped%'>$total_percent_mapped%</div>
+</div>
+</td>
+</tr></table>
+</td>
+<tr></table>
+</div>
+      </div>";
 ###########  displaying navigations  next,previous,last,first ############
-echo "</table><table><tr>";
+echo "<div class='row'>";
+echo "<center><table><tr>";
 if($page>0)
 {
 echo"<td><a href='#' onclick='return display_report(\"page\",0,$total_page)' title='First Page'> |< First &nbsp;</a> &nbsp; &nbsp;</td>";
@@ -553,14 +613,16 @@ if($page<$total_page)
 echo"<td><a href='#' onclick='return display_report(\"page\",$total_page,$total_page)' title='Last Page'> Last >| &nbsp;</a> &nbsp; &nbsp;</td>";
 }
 ##########   end displaying navigations ##################
-echo "<td align='center'><input type='submit' name='save' value='Save Changes'></td></tr>";
+echo "<td align='center'><input type='submit' name='save' value='Save Changes' class='btn btn-success'></td></tr>";
 echo "</table>";
-$count=++$first_row;
-echo "<table border='1' cellspacing='0'><tr style='background-color:black;color:white'><th>SN</th><th>$src_doc_name</th><th>Marked As A Match In $target_doc_name</th><th>Possible Matches From $target_doc_name</th></tr>";
+echo "</div>";
+echo "<div class='row'>";
+echo "<div class='col-6'>";
 
-$entity_match->source_entities = $entity_match->cache_vims_facilities($districts,$src_doc_name,$first_row,$max_rows);
-$entity_match->target_entities = $entity_match->cache_hfr_facilities($target_doc_name);
-$entity_match->target_orgs_entities = $entity_match->cache_hfr_orgs($target_doc_name);
+echo "</div>";
+echo "<div class='col-xl'>";
+$count=$first_row;
+echo "<center><table border='1' class='table-hover' cellspacing='0' cellspacing='0'><tr style='background-color:black;color:white'><th>SN</th><th>$src_doc_name</th><th>Marked As A Match In $target_doc_name</th><th>Possible Matches From $target_doc_name</th></tr>";
 
 foreach ($entity_match->source_entities[$src_doc_name] as $entity_id=>$entity) {
   $vimsid = $entity["id"];
@@ -569,11 +631,18 @@ foreach ($entity_match->source_entities[$src_doc_name] as $entity_id=>$entity) {
   $vimsftype = $entity["facilityType"];
   $vimsname = $entity["name"];
   $vimsactive = $entity["active"];
+
+  $remainder=$count%2;
+  if ($remainder==0)
+  $bgcolor='daebf2';
+  else
+  $bgcolor='#CCCCCC';
+
 	$rankings = $entity_match->find_matching_entities($entity_id,$vimsname,$vimsid,$vimscode);
   if(array_key_exists("dup",$rankings) and count($rankings["dup"])>1)
   echo "<tr bgcolor='	#EC7063'>";
   else
-  echo "<tr>";
+  echo "<tr class='success' style='background-color:$bgcolor'>";
 	echo "<td>$count</td><td><input type='hidden' name=source[$vimsid] value=".$vimsid.">".$vimsname;
   echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;ID: $vimsid";
   echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;Code: $vimscode";
@@ -663,7 +732,11 @@ if($page<$total_page)
 echo"<td><a href='#' onclick='return display_report(\"page\",$total_page,$total_page)' title='Last Page'> Last >| &nbsp;</a> &nbsp; &nbsp;</td>";
 }
 ##########   end displaying navigations ##################
-echo "<td align='center'><input type='submit' name='save' value='Save Changes'></td></tr>";
-echo "</table></center></form>";
+echo "<td align='center'><input type='submit' name='save' value='Save Changes' class='btn btn-success'></td></tr>";
+echo "</table>";
+echo "</div>";
+echo "</div>";
+
+echo "</center></form>";
 }
 ?>

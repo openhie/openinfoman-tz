@@ -1,3 +1,11 @@
+openinfoman-tz (1.2.15~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.15
+    -ce5641b removing hello world file
+    --https://github.com/openhie/openinfoman-tz/commmit/ce5641b
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 14 Apr 2018 07:31:20 +0000
+
 openinfoman-tz (1.2.14~xenial) xenial; urgency=medium
 
   * Release Version 1.2.14

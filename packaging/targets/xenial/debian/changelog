@@ -1,3 +1,31 @@
+openinfoman-tz (1.2.13~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.13
+    -28c5c24 adding compat file for packaging
+    --https://github.com/openhie/openinfoman-tz/commmit/28c5c24
+    -f00a612 adding dashboard to mapping tool
+    --https://github.com/openhie/openinfoman-tz/commmit/f00a612
+    -24e37e3 limiting number of best matches for performance
+    --https://github.com/openhie/openinfoman-tz/commmit/24e37e3
+    -9cdc061 localizing images for the entity matching tool
+    --https://github.com/openhie/openinfoman-tz/commmit/9cdc061
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 14 Apr 2018 07:14:03 +0000
+
+openinfoman-tz (1.2.13~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.13
+    -28c5c24 adding compat file for packaging
+    --https://github.com/openhie/openinfoman-tz/commmit/28c5c24
+    -f00a612 adding dashboard to mapping tool
+    --https://github.com/openhie/openinfoman-tz/commmit/f00a612
+    -24e37e3 limiting number of best matches for performance
+    --https://github.com/openhie/openinfoman-tz/commmit/24e37e3
+    -9cdc061 localizing images for the entity matching tool
+    --https://github.com/openhie/openinfoman-tz/commmit/9cdc061
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 14 Apr 2018 07:13:31 +0000
+
 openinfoman-tz (1.2.12~xenial) xenial; urgency=medium
 
   * Release Version 1.2.12

@@ -1,3 +1,9 @@
+openinfoman-tz (1.2.20~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.20
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sat, 14 Apr 2018 08:13:07 +0000
+
 openinfoman-tz (1.2.19~xenial) xenial; urgency=medium
 
   * Release Version 1.2.19

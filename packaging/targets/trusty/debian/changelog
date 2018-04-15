@@ -1,3 +1,11 @@
+openinfoman-tz (1.2.21~trusty) trusty; urgency=medium
+
+  * Release Version 1.2.21
+    -1edb951 packaging for ubuntu 18.04
+    --https://github.com/openhie/openinfoman-tz/commmit/1edb951
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Sun, 15 Apr 2018 07:24:27 +0000
+
 openinfoman-tz (1.2.20~trusty) trusty; urgency=medium
 
   * Release Version 1.2.20

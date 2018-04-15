@@ -1,0 +1,28 @@
+#!/bin/bash
+set -x
+
+
+
+OI=/var/lib/openinfoman
+USERNAME=oi
+BASEX=$OI/bin/basex
+
+
+REPOS=()
+SFS=("stored_query_definitions/select_dhis_district.xml" "stored_query_definitions/select_village.xml" "stored_query_definitions/select_hfr_facility.xml" "stored_query_definitions/select_vims_district.xml" "stored_query_definitions/select_village.xml" "stored_updating_query_definitions/hfr_facilities_to_csd.xml" "stored_updating_query_definitions/rm_org_hierarchy_to_csd.xml" "stored_updating_query_definitions/facility_create_otherid.xml" "stored_updating_query_definitions/facility_create_dhis_tz.xml" "stored_updating_query_definitions/facility_create_dvs_tz.xml" "stored_updating_query_definitions/facility_create_hfr_tz.xml" "stored_updating_query_definitions/facility_create_vims_tz.xml" "stored_updating_query_definitions/organization_create_dhis_tz.xml" "stored_updating_query_definitions/organization_create_hfr_tz.xml")
+
+for REPO in ${REPOS[@]}
+do
+   INST="REPO INSTALL ${OI}/repo-src/${REPO}"
+   $BASEX -Vc "${INST}"
+done
+
+for SF in ${SFS[@]}
+do
+  cd $OI
+  $OI/resources/scripts/install_stored_function.php $OI/resources/$SF
+  if [[ $? != 0 ]]; then exit 1; fi
+done
+
+
+chown -R $USERNAME:$USERNAME $OI

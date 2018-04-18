@@ -1,3 +1,11 @@
+openinfoman-tz (1.2.22~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.22
+    -19a90c6 Removing dupplicate SF
+    --https://github.com/openhie/openinfoman-tz/commmit/19a90c6
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Wed, 18 Apr 2018 18:46:54 +0000
+
 openinfoman-tz (1.2.21~xenial) xenial; urgency=medium
 
   * Release Version 1.2.21

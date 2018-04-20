@@ -1,3 +1,11 @@
+openinfoman-tz (1.2.23~xenial) xenial; urgency=medium
+
+  * Release Version 1.2.23
+    -391b36f making openinfoman-dhis as a dependency
+    --https://github.com/openhie/openinfoman-tz/commmit/391b36f
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Fri, 20 Apr 2018 03:21:28 +0000
+
 openinfoman-tz (1.2.22~xenial) xenial; urgency=medium
 
   * Release Version 1.2.22

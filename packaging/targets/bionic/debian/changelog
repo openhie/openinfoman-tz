@@ -1,3 +1,13 @@
+openinfoman-tz (1.2.24~bionic) bionic; urgency=medium
+
+  * Release Version 1.2.24
+    -4bcb83d Merge branch 'master' of https://github.com/openhie/openin
+    --https://github.com/openhie/openinfoman-tz/commmit/4bcb83d
+    -eaf0e4b fixing bug
+    --https://github.com/openhie/openinfoman-tz/commmit/eaf0e4b
+
+ -- Carl Leitner <litlfred@ibiblio.org>  Fri, 20 Apr 2018 03:23:23 +0000
+
 openinfoman-tz (1.2.23~bionic) bionic; urgency=medium
 
   * Release Version 1.2.23
